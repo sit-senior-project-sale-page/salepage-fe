@@ -153,7 +153,7 @@ export default {
   },
 
   router: {
-    middleware: ['auth'],
+    // middleware: ['auth'],
   },
 
   auth: {
