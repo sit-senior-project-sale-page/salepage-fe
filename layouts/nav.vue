@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w-full h-12 nav" style=""></div>
+    <div class="w-full h-12 nav fixed" style=""></div>
     <Nuxt />
   </div>
 </template>

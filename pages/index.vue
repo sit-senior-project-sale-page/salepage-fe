@@ -10,11 +10,9 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator';
-@Component({})
+@Component({
+})
 export default class Index extends Vue {
-  // name: 'IndexPage',
-  // layout(context) {
-  //   return 'nav'
-  // },
+  
 }
 </script>

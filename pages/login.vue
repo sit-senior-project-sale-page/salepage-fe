@@ -1,13 +1,17 @@
 <template>
-  <div>
-    <!-- <div class="w-full bg-yellow-400 h-5"></div> -->
-    <!-- <nuxt-link to="/login" ><div>hihihihihihihi</div></nuxt-link> -->
-    hihi hi
+  <div class="pt-12">
+    <div class="fixed body w-screen h-screen"></div>
+    <div class="p-10 bg-white">
+      <div>Login</div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator';
-@Component({})
+@Component({
+  name: 'ShopIndex',
+  layout: 'nav',
+})
 export default class Login extends Vue {}
 </script>
