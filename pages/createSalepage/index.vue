@@ -145,7 +145,7 @@ export default class Index extends Vue {
   //* เขียนเชื่อมต่อกับหลังบ้านได้เลย
   //กด create sale page เเล้วเอาข้อมูลไปเเสดง
   createSalepage() {
-    window.open('/jom/product/1', '_blank');
+    window.open('/createSalepage/product/1', '_blank');
   }
 
   addCode() {
