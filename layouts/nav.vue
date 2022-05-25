@@ -14,4 +14,5 @@ export default class NavBar extends Vue {}
 .nav {
     background-color: rgb(255, 185, 55)
 }
+
 </style>
