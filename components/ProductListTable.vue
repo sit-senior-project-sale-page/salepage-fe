@@ -24,7 +24,7 @@
             <th class="flex justify-center py-4">
               <img
                 :src="productOptionImage(product)"
-                class="rounded-full w-16 h-16"
+                class="rounded-full object-cover w-16 h-16"
               />
             </th>
             <th

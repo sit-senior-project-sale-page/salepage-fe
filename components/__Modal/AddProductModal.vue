@@ -11,7 +11,7 @@
             Add product
           </h2>
           <button
-            class="bg-red-600 text-white active:bg-red-700 text-sm font-bold uppercase p-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            class="bg-red-600 text-white active:bg-red-700 text-sm font-bold uppercase p-3 w-10 h-10 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
             @click="show = false"
           >
