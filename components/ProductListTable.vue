@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-white">
+  <div class="w-full">
     <div class="py-4 text-center bg-white">
       <h1 class="text-2xl font-bold text-gray-900 uppercase">Product List</h1>
     </div>

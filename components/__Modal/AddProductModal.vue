@@ -73,7 +73,7 @@ export default class AddProductModal extends Vue {
 
   @Prop({ type: Array, default: [] }) readonly productOptions!: Array<any>;
 
-  // productOptionImage: File | null = null;
+  productOptionImage: File | null = null;
 
   modelList: Array<any> = [
     {
@@ -98,12 +98,12 @@ export default class AddProductModal extends Vue {
     this.$emit('addProduct', {
       modelList: [
         ...this.modelListComputed,
-        // this.productOptionImage && {
-        //   text: 'Image',
-        //   model: 'image',
-        //   placeholder: 'input image',
-        //   value: URL.createObjectURL(this.productOptionImage),
-        // },
+        this.productOptionImage && {
+          // text: 'Image',
+          model: 'image',
+          placeholder: 'input image',
+          value: URL.createObjectURL(this.productOptionImage),
+        },
       ],
     });
   }
