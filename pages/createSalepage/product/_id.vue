@@ -6,7 +6,7 @@
       height="510"
       :imagePreview="productMainPic"
     ></Placeholder>
-    <div class="py-4">
+    <div class="py-5">
       <div class="w-full border-t border-gray-300"></div>
     </div>
     <div class="grid lg:grid-cols-2 gap-12 my-12">
@@ -29,6 +29,9 @@
       height="510"
       :imagePreview="productPicNumberThree"
     ></Placeholder>
+    <div class="py-5">
+      <div class="w-full border-t border-gray-300"></div>
+    </div>
     <div class="grid lg:grid-cols-2 gap-12 my-12">
       <div class="w-full">
         <Placeholder

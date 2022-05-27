@@ -2,10 +2,10 @@
   <div
     v-show.transition.opacity="show"
     style="background-color: rgba(0, 0, 0, 0.8)"
-    class="fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full overflow-scroll"
+    class="fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full overflow-scroll mt-12"
   >
-    <div class="p-8 max-w-5xl mx-auto absolute left-0 right-0 2xl:top-[15%]">
-      <div class="shadow w-full rounded-lg bg-white block p-12">
+    <div class="p-3 md:p-5 max-w-5xl mx-auto absolute left-0 right-0 2xl:top-[15%]">
+      <div class="shadow w-full rounded-lg bg-white block p-5 md:p-8">
         <div class="flex justify-between items-center">
           <h2 class="font-bold text-2xl text-gray-800 uppercase">
             Add product
@@ -21,7 +21,7 @@
 
         <div class="mt-4 pt-6 border-t">
           <div class="border-1">
-            <div class="flex flex-row mb-6 gap-8">
+            <div class="md:flex flex-row mb-6 gap-8">
               <div class="basis-1/2">
                 <div
                   v-for="(item, index) in modelListComputed"

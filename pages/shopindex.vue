@@ -7,7 +7,7 @@
       <span class="my-auto mx-auto text-gray-300">commercial banner</span>
     </div>
     <div
-      class="w-full lg:w-10/12 xl:w-8/12 bg-white lg:mx-auto lg:rounded-md align-middle mt-10"
+      class="w-full lg:w-10/12 xl:w-8/12 pb-20 md:pb-0 bg-white lg:mx-auto lg:rounded-md align-middle mt-10"
     >
       <div class="flex">
         <div
@@ -41,16 +41,21 @@
       </div>
       <div
         v-if="menu1"
-        class="p-5 md:p-10 grid gap-5 lg:grid-cols-2 justify-items-center mt-5"
+        class="p-5 md:p-10 w-full grid gap-5 md:grid-cols-2 justify-items-center mt-5"
       >
         <BaseCard />
         <nuxt-link to="createSalepage">
-          <div class="bg-gray-200 rounded-md w-96 h-36 flex text-center">
+          <div
+            class="bg-gray-200 rounded-md flex text-center"
+            style="width: 325px; height: 125px"
+          >
             <span class="mx-auto my-auto text-5xl font-bold text-white">+</span>
           </div></nuxt-link
         >
       </div>
-      <div v-if="menu2" class="p-10 py-16 flex justify-center">No order yet</div>
+      <div v-if="menu2" class="p-10 py-16 flex justify-center">
+        No order yet
+      </div>
     </div>
   </div>
 </template>

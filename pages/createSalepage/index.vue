@@ -54,7 +54,7 @@
                 </div>
               </div>
             </div>
-            <div class="flex space-x-2">
+            <div class="md:flex md:space-x-2 space-y-2 md:space-y-0">
               <button
                 class="text-white font-bold py-4 px-4 rounded-lg w-full"
                 style="background-color: #ffb937"
