@@ -1,8 +1,8 @@
 <template>
   <div
+    v-show.transition.opacity="show"
     style="background-color: rgba(0, 0, 0, 0.8)"
     class="fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full overflow-scroll"
-    v-show.transition.opacity="show"
   >
     <div class="p-8 max-w-5xl mx-auto absolute left-0 right-0 2xl:top-[15%]">
       <div class="shadow w-full rounded-lg bg-white block p-12">
@@ -24,9 +24,9 @@
             <div class="flex flex-row mb-6 gap-8">
               <div class="basis-1/2">
                 <div
-                  class="block pb-8"
                   v-for="(item, index) in modelListComputed"
                   :key="index"
+                  class="block pb-8"
                 >
                   <label
                     :for="item.model"
@@ -34,9 +34,9 @@
                     >{{ item.text }}</label
                   >
                   <input
+                    :id="item.model"
                     v-model="item.value"
                     type="text"
-                    :id="item.model"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     :placeholder="item.placeholder"
                     required
@@ -45,8 +45,8 @@
               </div>
               <div class="w-full">
                 <Placeholder
-                  height="442"
                   v-model="productOptionImage"
+                  height="442"
                 ></Placeholder>
               </div>
             </div>
@@ -73,7 +73,7 @@ export default class AddProductModal extends Vue {
 
   @Prop({ type: Array, default: [] }) readonly productOptions!: Array<any>;
 
-  productOptionImage: File | null = null;
+  // productOptionImage: File | null = null;
 
   modelList: Array<any> = [
     {
@@ -98,12 +98,12 @@ export default class AddProductModal extends Vue {
     this.$emit('addProduct', {
       modelList: [
         ...this.modelListComputed,
-        this.productOptionImage && {
-          text: 'Image',
-          model: 'image',
-          placeholder: 'input image',
-          value: URL.createObjectURL(this.productOptionImage),
-        },
+        // this.productOptionImage && {
+        //   text: 'Image',
+        //   model: 'image',
+        //   placeholder: 'input image',
+        //   value: URL.createObjectURL(this.productOptionImage),
+        // },
       ],
     });
   }

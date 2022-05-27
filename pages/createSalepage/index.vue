@@ -1,12 +1,12 @@
 <template>
   <div class="w-full pb-12">
     <AddProductModal
-      v-model="dialog.enable"
       v-if="dialog.enable"
-      :productOptions="productOptions"
+      v-model="dialog.enable"
+      :product-options="productOptions"
       @addProduct="addProduct"
     ></AddProductModal>
-    <Placeholder height="510" v-model="productMainPic"></Placeholder>
+    <Placeholder v-model="productMainPic" height="510"></Placeholder>
     <div class="py-4">
       <div class="w-full border-t border-gray-300"></div>
     </div>
@@ -16,14 +16,14 @@
     <div class="grid grid-cols-2 grid-flow-col gap-24">
       <div class="w-full">
         <Placeholder
-          :height="'386'"
           v-model="productPicNumberTwo"
+          :height="'386'"
         ></Placeholder>
         <h3 class="mt-12 mb-4 text-[24px] font-bold text-gray-900">
           PRODUCT OPTION
         </h3>
         <div class="mb-12 flex justify-start gap-4">
-          <div v-for="(option, index) in productOptions">
+          <div v-for="(option, index) in productOptions" :key="index">
             <div
               class="bg-[#3C3F42] px-8 py-3 text-white rounded-[10px] uppercase"
             >
@@ -50,8 +50,8 @@
       </div>
       <div class="w-full">
         <Placeholder
-          :height="'386'"
           v-model="productPicNumberThree"
+          :height="'386'"
         ></Placeholder>
 
         <h3 class="mt-12 mb-4 text-[24px] font-bold text-gray-900">CODE</h3>
@@ -117,6 +117,7 @@ export default class Index extends Vue {
   dialog = {
     enable: false,
   };
+
   productMainPic: File | null = null;
   productPicNumberTwo = null;
   productPicNumberThree = null;
@@ -124,18 +125,18 @@ export default class Index extends Vue {
   codes = [] as Array<any>;
 
   addProductOption() {
-    //*Regex replace white space to camelCase
-    const model = this.productOption
-      .replace(/\s(.)/g, function (match, group1) {
-        return group1.toUpperCase();
-      })
-      .replace(/\s/g, '')
-      .replace(/^(.)/, function (match, group1) {
-        return group1.toLowerCase();
-      });
+    //* Regex replace white space to camelCase
+    // const model = this.productOption
+    //   .replace(/\s(.)/g, function (match, group1) {
+    //     return group1.toUpperCase();
+    //   })
+    //   .replace(/\s/g, '')
+    //   .replace(/^(.)/, function (match, group1) {
+    //     return group1.toLowerCase();
+    //   });
     this.productOptions.push({
       text: this.productOption,
-      model: model.toLowerCase().trim(),
+      // model: model.toLowerCase().trim(),
       placeholder: `type in ${this.productOption}`,
       value: '',
     });
@@ -143,7 +144,7 @@ export default class Index extends Vue {
   }
 
   //* เขียนเชื่อมต่อกับหลังบ้านได้เลย
-  //กด create sale page เเล้วเอาข้อมูลไปเเสดง
+  // กด create sale page เเล้วเอาข้อมูลไปเเสดง
   createSalepage() {
     window.open('/createSalepage/product/1', '_blank');
   }
@@ -163,21 +164,18 @@ export default class Index extends Vue {
   }
 
   addProduct(data: any) {
-    let productForm = this.$refs.productForm as any;
-    let price =
+    const productForm = this.$refs.productForm as any;
+    const price =
       data.modelList.find((item: any) => item.model === 'price')?.value || 0;
-    let amount =
+    const amount =
       data.modelList.find((item: any) => item.model === 'inStock')?.value || 0;
-    let productOptionImage = data.modelList.filter(
-      (item: any) => item.model === 'image'
-    );
-    let options = data.modelList.filter(
+    const options = data.modelList.filter(
       (item: any) => item.model !== 'price' && item.model !== 'inStock'
     );
 
     this.products.push({
       productId: Date.now(),
-      productMainPic: URL.createObjectURL(this.productMainPic as File),
+      // productMainPic: URL.createObjectURL(this.productMainPic as File),
       productName: productForm.productName,
       productDetail: productForm.productDetail,
       productAmount: amount,
@@ -187,6 +185,11 @@ export default class Index extends Vue {
     console.log(this.products);
 
     this.dialog.enable = false;
+  }
+
+  async created() {
+    const result = await this.$api.site.getSites();
+    console.log('result', result);
   }
 }
 </script>
