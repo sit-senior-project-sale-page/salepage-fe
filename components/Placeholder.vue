@@ -1,11 +1,8 @@
 <template>
   <div>
     <div
-      class="relative bg-[#dedede] rounded-[10px] cursor-pointer"
+      class="relative bg-[#dedede] rounded-lg cursor-pointer box"
       @click="upload"
-      :style="{
-        height: height + 'px',
-      }"
       v-if="!image && type === 'upload'"
     >
       <div class="arrow"></div>
@@ -17,14 +14,23 @@
         @change="onChangeFile"
       />
     </div>
-    <img
+    <div
       v-else
-      class="w-full object-contain"
+      class="rounded-lg"
       :style="{
-        height: height + 'px',
+        'background-image': `url(${image})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        'background-position': 'center',
       }"
-      :src="image"
-    />
+    >
+      <div class="rounded-lg" style="backdrop-filter: blur(15px);">
+        <img
+          class="w-full object-contain box"
+          :src="image"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -34,7 +40,7 @@ import { Vue, Component, Prop, VModel } from 'nuxt-property-decorator';
 @Component
 export default class Placeholder extends Vue {
   @Prop({ type: String, default: 'upload' }) type!: string;
-  @Prop({ type: String, default: '510' }) height!: string;
+  // @Prop({ type: String, default: '510' }) height!: string;
   @Prop({ type: String, default: '' }) imagePreview!: string;
 
   fileUpload: File | null = null;
@@ -57,11 +63,14 @@ export default class Placeholder extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
+.box {
+  aspect-ratio: 16 / 9;
+}
 .arrow {
   position: absolute;
-  width: 30px;
-  height: 173.2px;
+  width: 15px;
+  height: 100px;
   top: 0;
   bottom: 0;
   margin: auto;
@@ -74,8 +83,8 @@ export default class Placeholder extends Vue {
 }
 .arrow-vertical {
   position: absolute;
-  width: 30px;
-  height: 173.2px;
+  width: 15px;
+  height: 100px;
   top: 0;
   bottom: 0;
   margin: auto;
