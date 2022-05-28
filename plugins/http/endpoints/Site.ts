@@ -1,8 +1,8 @@
 import Endpoint from './Endpoint';
 
 enum APIS {
-  GET_SITE = '/site',
-  POST_SITE = '/site',
+  GET_SITE = '/api/site',
+  POST_SITE = '/api/site',
 }
 
 export default class SiteEndpoint extends Endpoint {

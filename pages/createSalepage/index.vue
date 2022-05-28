@@ -3,12 +3,12 @@
     <div class="fixed body w-screen h-screen top-0"></div>
     <div class="w-full pb-12 px-5 md:px-12 xl:px-32">
       <AddProductModal
-        v-model="dialog.enable"
         v-if="dialog.enable"
-        :productOptions="productOptions"
+        v-model="dialog.enable"
+        :product-options="productOptions"
         @addProduct="addProduct"
       ></AddProductModal>
-      <Placeholder height="510" v-model="productMainPic"></Placeholder>
+      <Placeholder v-model="productMainPic" height="510"></Placeholder>
       <div class="py-10">
         <div class="w-full border-t border-gray-300"></div>
       </div>
@@ -17,8 +17,8 @@
       </div>
       <div class="">
         <div class="grid md:grid-cols-2 gap-10">
-          <Placeholder :height="'386'" v-model="productPicNumberTwo" />
-          <Placeholder :height="'386'" v-model="productPicNumberThree" />
+          <Placeholder v-model="productPicNumberTwo" :height="'386'" />
+          <Placeholder v-model="productPicNumberThree" :height="'386'" />
         </div>
         <div class="py-10">
           <div class="w-full border-t border-gray-300"></div>
@@ -119,15 +119,15 @@
       </div>
       <div class="w-full my-12">
         <MyButton
+          v-if="products.length == 0"
           color="#CACACA"
           class="cursor-not-allowed"
-          v-if="products.length == 0"
           >CREATE SALEPAGE</MyButton
         >
         <MyButton
+          v-if="products.length > 0"
           color="#195C9B"
           @click="createSalepage"
-          v-if="products.length > 0"
           >CREATE SALEPAGE</MyButton
         >
       </div>
@@ -173,9 +173,9 @@ export default class Index extends Vue {
       this.productPicNumberTwo != null &&
       this.productPicNumberThree != null
     ) {
-      this.dialog.enable = true
+      this.dialog.enable = true;
     } else {
-      window.alert("Please fill all form before add a product options");
+      window.alert('Please fill all form before add a product options');
     }
   }
 
@@ -249,7 +249,7 @@ export default class Index extends Vue {
     this.dialog.enable = false;
   }
 
-  async createSalepage() {
+  async created() {
     const result = await this.$api.site.getSites();
     console.log('result', result);
   }
