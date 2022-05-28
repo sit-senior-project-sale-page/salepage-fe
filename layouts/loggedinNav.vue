@@ -5,7 +5,7 @@
         class="px-5 rounded-md hover:bg-white hover:bg-opacity-25 transition-all flex"
       >
         <div class="my-auto mx-auto">
-          <nuxt-link to="/">Home</nuxt-link>
+          <nuxt-link to="shopindex">Home</nuxt-link>
         </div>
       </div>
       <div
