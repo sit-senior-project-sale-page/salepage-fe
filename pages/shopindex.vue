@@ -43,7 +43,10 @@
         v-if="menu1"
         class="p-5 md:p-10 w-full grid gap-5 md:grid-cols-2 justify-items-center mt-5"
       >
-        <BaseCard />
+        <div v-for="web in webs" :key="web">
+          <BaseCard :web="web" />
+        </div>
+        
         <nuxt-link to="createSalepage">
           <div
             class="bg-gray-200 rounded-md flex text-center"
@@ -75,6 +78,18 @@ export default class ShopIndex extends Vue {
   //   name: 'ShopIndex'
   menu1 = true;
   menu2 = false;
+  webs = [];
+
+  async mounted() {
+    const result = await this.$api.site.getSites();
+    console.log('result', result);
+
+    this.webs = result.data;
+    console.log(this.webs);
+    
+
+  }
+  
 }
 </script>
 <style scoped>

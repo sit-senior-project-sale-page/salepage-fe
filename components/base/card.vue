@@ -1,13 +1,13 @@
 <template>
   <div class="border-2 border-black rounded-md card flex">
     <img
-      src="https://i.scdn.co/image/ab67616d0000b2739016f58cc49e6473e1207093"
+      src="https://cdn.shopify.com/s/files/1/0210/2968/3222/articles/trending_products_to_sell_in_India_ad8fc9e0-5052-44bf-bd93-7bec4335f5ee.jpg?v=1647462399"
       class="object-cover productimg"
     />
     <div class="p-3 w-full h-full flex flex-col">
       <div>
-        <div class="text-lg font-semibold name">Page Name Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit porro consequuntur illum ad nobis explicabo error facilis beatae suscipit quia repellendus et in animi similique laboriosam laborum, cum itaque modi.</div>
-        <a href="http://" class="underline name" style="color: #4da9ff">link</a>
+        <div class="text-lg font-semibold name"> {{web.domain}} </div>
+        <a href="http://" class="underline name" style="color: #4da9ff"> {{web.domain}} </a>
       </div>
       <div class="flex space-x-2 w-full justify-end mt-auto">
         <div class="text-gray-400 underline cursor-pointer text-sm">Edit</div>
@@ -17,6 +17,16 @@
     </div>
   </div>
 </template>
+<script lang="ts">
+import { Vue, Component, Prop } from 'nuxt-property-decorator';
+@Component({
+  name: 'Card',
+})
+
+export default class Card extends Vue {
+  @Prop() web!: any
+}
+</script>
 <style scoped>
 .productimg {
   border-radius: 4px 0px 0px 4px;
