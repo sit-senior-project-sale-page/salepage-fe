@@ -1,17 +1,17 @@
 <template>
   <div
-    style="background-color: rgba(0, 0, 0, 0.8)"
-    class="fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full overflow-scroll"
     v-show.transition.opacity="show"
+    style="background-color: rgba(0, 0, 0, 0.8)"
+    class="fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full overflow-scroll mt-12"
   >
-    <div class="p-8 max-w-5xl mx-auto absolute left-0 right-0 2xl:top-[15%]">
-      <div class="shadow w-full rounded-lg bg-white block p-12">
+    <div class="p-3 md:p-5 max-w-5xl mx-auto absolute left-0 right-0 2xl:top-[15%]">
+      <div class="shadow w-full rounded-lg bg-white block p-5 md:p-8">
         <div class="flex justify-between items-center">
           <h2 class="font-bold text-2xl text-gray-800 uppercase">
             Add product
           </h2>
           <button
-            class="bg-red-600 text-white active:bg-red-700 text-sm font-bold uppercase p-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            class="bg-red-600 text-white active:bg-red-700 text-sm font-bold uppercase p-3 w-10 h-10 rounded-full outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
             @click="show = false"
           >
@@ -21,12 +21,12 @@
 
         <div class="mt-4 pt-6 border-t">
           <div class="border-1">
-            <div class="flex flex-row mb-6 gap-8">
+            <div class="md:flex flex-row mb-6 gap-8">
               <div class="basis-1/2">
                 <div
-                  class="block pb-8"
                   v-for="(item, index) in modelListComputed"
                   :key="index"
+                  class="block pb-8"
                 >
                   <label
                     :for="item.model"
@@ -34,9 +34,9 @@
                     >{{ item.text }}</label
                   >
                   <input
+                    :id="item.model"
                     v-model="item.value"
                     type="text"
-                    :id="item.model"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     :placeholder="item.placeholder"
                     required
@@ -45,8 +45,8 @@
               </div>
               <div class="w-full">
                 <Placeholder
-                  height="442"
                   v-model="productOptionImage"
+                  height="442"
                 ></Placeholder>
               </div>
             </div>
@@ -99,7 +99,7 @@ export default class AddProductModal extends Vue {
       modelList: [
         ...this.modelListComputed,
         this.productOptionImage && {
-          text: 'Image',
+          // text: 'Image',
           model: 'image',
           placeholder: 'input image',
           value: URL.createObjectURL(this.productOptionImage),

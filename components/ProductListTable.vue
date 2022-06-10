@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-white">
+  <div class="w-full">
     <div class="py-4 text-center bg-white">
       <h1 class="text-2xl font-bold text-gray-900 uppercase">Product List</h1>
     </div>
@@ -24,7 +24,7 @@
             <th class="flex justify-center py-4">
               <img
                 :src="productOptionImage(product)"
-                class="rounded-full w-16 h-16"
+                class="rounded-full object-cover w-16 h-16"
               />
             </th>
             <th

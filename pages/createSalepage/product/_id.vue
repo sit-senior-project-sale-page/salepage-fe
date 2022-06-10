@@ -1,14 +1,15 @@
 <template>
-  <div class="w-full pb-12">
+  <div class="w-full pb-12 px-5 md:px-12 xl:px-32">
+    <div class="fixed body w-screen h-screen top-0 left-0"></div>
     <Placeholder
       type="preview"
       height="510"
       :imagePreview="productMainPic"
     ></Placeholder>
-    <div class="py-4">
+    <div class="py-5">
       <div class="w-full border-t border-gray-300"></div>
     </div>
-    <div class="grid grid-cols-2 grid-flow-col gap-12 my-12">
+    <div class="grid lg:grid-cols-2 gap-12 my-12">
       <div class="w-full">
         <Placeholder
           type="preview"
@@ -28,7 +29,10 @@
       height="510"
       :imagePreview="productPicNumberThree"
     ></Placeholder>
-    <div class="grid grid-cols-2 grid-flow-col gap-12 my-12">
+    <div class="py-5">
+      <div class="w-full border-t border-gray-300"></div>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-12 my-12">
       <div class="w-full">
         <Placeholder
           type="preview"
@@ -41,7 +45,7 @@
         <select
           name="options"
           id="options"
-          class="my-input w-full"
+          class="border border-gray-300 rounded-lg text-gray-600 h-10  w-full sm:w-3/4 px-2 hover:shadow focus:outline-none focus:ring-2 focus:ring-blue-300 focus:shadow ring-offset-2 cursor-pointer"
           v-model="productOption"
         >
           <option value="">Select</option>
@@ -52,13 +56,17 @@
         <h2 class="my-4 text-[24px] font-bold text-gray-900">Amount</h2>
         <input
           type="text"
-          class="my-input w-full"
+          class="bg-white rounded p-2 w-full sm:w-3/4 hover:shadow 
+                  focus:outline-none focus:ring-2 focus:ring-blue-300
+                  focus:shadow-outline focus:shadow ring-offset-2"
           placeholder="type your number"
         />
-        <h2 class="my-4 text-[24px] font-bold text-gray-900">Code</h2>
+        <h2 class="my-4 text-[24px] font-bold text-gray-900">Promotion Code</h2>
         <input
           type="text"
-          class="my-input w-full"
+          class="bg-white rounded p-2 w-full sm:w-3/4 hover:shadow 
+                  focus:outline-none focus:ring-2 focus:ring-blue-300
+                  focus:shadow-outline focus:shadow ring-offset-2"
           placeholder="type your number"
         />
         <h2 class="my-4 text-right text-[24px] font-bold">
@@ -75,6 +83,7 @@ import { Component, Vue } from 'nuxt-property-decorator';
 import Placeholder from '~/components/Placeholder.vue';
 
 @Component({
+  layout: 'loggedinNav',
   components: {
     Placeholder,
   },
@@ -136,4 +145,9 @@ export default class Product extends Vue {
 }
 </script>
 
-<style></style>
+<style scoped>
+.body {
+  background-color: #f6f6f6;
+  z-index: -1;
+}
+</style>

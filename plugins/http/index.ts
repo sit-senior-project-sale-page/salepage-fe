@@ -29,7 +29,7 @@ declare module 'vuex/types/index' {
 }
 
 const servicePlugin: Plugin = (context, inject) => {
-  const axios: AxiosWrapper = new AxiosWrapper(context.$axios, '/api');
+  const axios: AxiosWrapper = new AxiosWrapper(context.$axios, '');
   inject('http', axios);
   inject('api', new ApiService(axios));
 };
