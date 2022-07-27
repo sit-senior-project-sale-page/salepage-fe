@@ -17,8 +17,8 @@ export default class SiteEndpoint extends Endpoint {
     return this.axiosWrapper.interceptor<any>(res);
   }
 
-  async createSite(oldPassword: string, newPassword: string) {
-    const payload = { oldPassword, newPassword };
+  async createSite(data: object) {
+    const payload = { data };
     const res = await this.axiosWrapper.post(APIS.POST_SITE, payload);
     return this.axiosWrapper.interceptor<any>(res);
   }
