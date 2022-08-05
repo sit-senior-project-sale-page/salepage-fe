@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full pb-12 px-5 md:px-12 xl:px-32">
-    <div class="fixed body w-screen h-screen top-0 left-0"></div>
+  <div class="w-full px-5 pb-12 md:px-12 xl:px-32">
+    <div class="fixed top-0 left-0 w-screen h-screen body"></div>
     <Placeholder
       type="preview"
       height="510"
@@ -9,7 +9,7 @@
     <div class="py-5">
       <div class="w-full border-t border-gray-300"></div>
     </div>
-    <div class="grid lg:grid-cols-2 gap-12 my-12">
+    <div class="grid gap-12 my-12 lg:grid-cols-2">
       <div class="w-full">
         <Placeholder
           type="preview"
@@ -32,7 +32,7 @@
     <div class="py-5">
       <div class="w-full border-t border-gray-300"></div>
     </div>
-    <div class="grid lg:grid-cols-2 gap-12 my-12">
+    <div class="grid gap-12 my-12 lg:grid-cols-2">
       <div class="w-full">
         <Placeholder
           type="preview"
@@ -45,7 +45,7 @@
         <select
           name="options"
           id="options"
-          class="border border-gray-300 rounded-lg text-gray-600 h-10  w-full sm:w-3/4 px-2 hover:shadow focus:outline-none focus:ring-2 focus:ring-blue-300 focus:shadow ring-offset-2 cursor-pointer"
+          class="w-full h-10 px-2 text-gray-600 border border-gray-300 rounded-lg cursor-pointer sm:w-3/4 hover:shadow focus:outline-none focus:ring-2 focus:ring-blue-300 focus:shadow ring-offset-2"
           v-model="productOption"
         >
           <option value="">Select</option>
@@ -56,17 +56,13 @@
         <h2 class="my-4 text-[24px] font-bold text-gray-900">Amount</h2>
         <input
           type="text"
-          class="bg-white rounded p-2 w-full sm:w-3/4 hover:shadow 
-                  focus:outline-none focus:ring-2 focus:ring-blue-300
-                  focus:shadow-outline focus:shadow ring-offset-2"
+          class="w-full p-2 bg-white rounded sm:w-3/4 hover:shadow focus:outline-none focus:ring-2 focus:ring-blue-300 focus:shadow-outline focus:shadow ring-offset-2"
           placeholder="type your number"
         />
         <h2 class="my-4 text-[24px] font-bold text-gray-900">Promotion Code</h2>
         <input
           type="text"
-          class="bg-white rounded p-2 w-full sm:w-3/4 hover:shadow 
-                  focus:outline-none focus:ring-2 focus:ring-blue-300
-                  focus:shadow-outline focus:shadow ring-offset-2"
+          class="w-full p-2 bg-white rounded sm:w-3/4 hover:shadow focus:outline-none focus:ring-2 focus:ring-blue-300 focus:shadow-outline focus:shadow ring-offset-2"
           placeholder="type your number"
         />
         <h2 class="my-4 text-right text-[24px] font-bold">

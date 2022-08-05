@@ -1,6 +1,6 @@
 <template>
   <button
-    class="text-white font-bold py-4 px-4 rounded-lg w-full"
+    class="w-full px-4 py-4 font-bold text-white rounded-lg "
     :style="{
       backgroundColor: color,
     }"
