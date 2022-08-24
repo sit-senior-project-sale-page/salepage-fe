@@ -27,7 +27,7 @@ export default class NavBar extends Vue {}
 </script>
 <style scoped>
 .nav {
-  background-color: #ffb937;
+  background-color: #ffb730;
 }
 
 </style>
