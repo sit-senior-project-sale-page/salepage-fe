@@ -131,6 +131,7 @@
           >CREATE SALEPAGE</MyButton
         >
       </div>
+      <div @click="createSalepage()">test</div>
     </div>
   </div>
 </template>
@@ -142,6 +143,7 @@ import FormProduct from '~/components/FormProduct.vue';
 import MyButton from '~/components/MyButton.vue';
 import ProductListTable from '~/components/ProductListTable.vue';
 import AddProductModal from '@/components/__Modal/AddProductModal.vue';
+import { data } from 'autoprefixer';
 
 @Component({
   layout: 'loggedinNav',
@@ -249,8 +251,26 @@ export default class Index extends Vue {
     this.dialog.enable = false;
   }
 
-  async created() {
-    const result = await this.$api.site.getSites();
+  async createSalepage() {
+    console.log("hi");
+    
+    let data = {
+      domain: 'test prod',
+      lineAccountId: 'line@',
+      messengerAccountId: '@mess',
+      product: {
+        name: 'test prod',
+        detail: 'adfadf',
+        productOption: [
+          {
+            name: 'test option prod',
+            quantity: 1,
+            price: 2,
+          },
+        ],
+      },
+    };
+    const result = await this.$api.site.createSite(data);
     console.log('result', result);
   }
 }
