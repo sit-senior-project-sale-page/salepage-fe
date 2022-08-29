@@ -271,6 +271,8 @@ export default class Login extends Vue {
   startX = '';
   scrollLeft = '';
 
+  test = 0;
+
   mounted() {
     //   slider = document.querySelector(".gallery");
     // isDown = false;
