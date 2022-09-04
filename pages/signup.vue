@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col pt-24 mb-44 text-center">
+  <div class="flex flex-col pt-32 md:pt-24 mb-44 text-center">
     <div class="font-semibold text-xl" v-if="state == 1">
       Start your membership
     </div>
@@ -8,17 +8,17 @@
     </div>
     <div class="font-semibold text-xl" v-if="state == 3">Last step</div>
 
-    <div class="flex justify-center mt-5">
+    <div class="flex justify-center mt-5" style="transition-duration: 0.25s">
       <div
         v-if="state == 1"
-        class="w-12 h-12 text-white rounded-full flex"
+        class="w-10 h-10 md:w-12 md:h-12 text-white rounded-full flex"
         style="background-color: #0f385f"
       >
         <span class="mx-auto my-auto">1</span>
       </div>
       <div
         v-if="state > 1"
-        class="w-12 h-12 text-white rounded-full flex"
+        class="w-10 h-10 md:w-12 md:h-12 text-white rounded-full flex"
         style="background-color: #35c502"
       >
         <span class="mx-auto my-auto">✔</span>
@@ -26,32 +26,33 @@
 
       <div
         v-if="state == 1"
-        class="w-32 my-auto"
+        class="w-20 md:w-32 my-auto"
         style="height: 1.5px; background-color: #0f385f"
       />
+
       <div
         v-if="state > 1"
-        class="w-32 my-auto"
+        class="w-20 md:w-32 my-auto"
         style="height: 1.5px; background-color: #35c502"
       />
 
       <div
         v-if="state == 1"
-        class="w-12 h-12 text-white rounded-full flex"
+        class="w-10 h-10 md:w-12 md:h-12 text-white rounded-full flex"
         style="border-width: 1.5px; border-color: #0f385f; color: #0f385f"
       >
         <span class="mx-auto my-auto">2</span>
       </div>
       <div
         v-if="state == 2"
-        class="w-12 h-12 text-white rounded-full flex"
+        class="w-10 h-10 md:w-12 md:h-12 text-white rounded-full flex"
         style="background-color: #0f385f"
       >
         <span class="mx-auto my-auto">2</span>
       </div>
       <div
         v-if="state > 2"
-        class="w-12 h-12 text-white rounded-full flex"
+        class="w-10 h-10 md:w-12 md:h-12 text-white rounded-full flex"
         style="background-color: #35c502"
       >
         <span class="mx-auto my-auto">✔</span>
@@ -59,44 +60,44 @@
 
       <div
         v-if="state <= 2"
-        class="w-32 my-auto"
+        class="w-20 md:w-32 my-auto"
         style="height: 1.5px; background-color: #0f385f"
       />
       <div
         v-if="state > 2"
-        class="w-32 my-auto"
+        class="w-20 md:w-32 my-auto"
         style="height: 1.5px; background-color: #35c502"
       />
 
       <div
         v-if="state != 3"
-        class="w-12 h-12 text-white rounded-full flex"
+        class="w-10 h-10 md:w-12 md:h-12 text-white rounded-full flex"
         style="border-width: 1.5px; border-color: #0f385f; color: #0f385f"
       >
         <span class="mx-auto my-auto">3</span>
       </div>
       <div
         v-if="state == 3"
-        class="w-12 h-12 text-white rounded-full flex"
+        class="w-10 h-10 md:w-12 md:h-12 text-white rounded-full flex"
         style="background-color: #0f385f"
       >
         <span class="mx-auto my-auto">3</span>
       </div>
     </div>
     <div
-      class="flex justify-center mt-5 -ml-8 space-x-24"
-      style="color: #0f385f"
+      class="flex justify-center mt-5 -ml-8 space-x-12 md:space-x-28"
+      style="color: #0f385f; transition-duration: 0.25s"
     >
-      <div class="">create account</div>
-      <div class="">choose plan</div>
-      <div class="">payment</div>
+      <div class="text-sm pl-2 md:pl-0">create account</div>
+      <div class="text-sm">choose plan</div>
+      <div class="text-sm">payment</div>
     </div>
 
     <div
       id="state1"
       v-if="state == 1"
-      class="flex flex-col mt-20 mx-auto text-left"
-      style="width: 480px; transition-duration: 0.25s"
+      class="flex flex-col mt-20 px-5 mx-auto text-left w-screen"
+      style="transition-duration: 0.25s"
     >
       <div class="text-3xl font-semibold">Create account</div>
       <div class="mt-3 text-sm font-light">
@@ -134,12 +135,13 @@
     <div
       id="state2"
       v-if="state == 2"
-      class="flex flex-col mt-20 mx-auto text-left"
-      style="width: 800px; transition-duration: 0.25s"
+      class="flex flex-col mt-20 mx-auto text-left px-5"
+      style="transition-duration: 0.25s"
     >
-      <div class="text-3xl font-semibold">Choose your plan</div>
+      <div class="text-3xl font-semibold head">Choose your plan</div>
+
       <div
-        class="mt-10 text-sm font-light rounded-2xl p-10"
+        class="mt-10 text-sm font-light rounded-2xl box"
         style="border-color: #000000; border-width: 1.5px"
       >
         <div class="text-xl font-semibold mb-5">Monthly subscribtion</div>
@@ -147,14 +149,14 @@
           <div></div>
           <div
             v-if="plan == 'ms'"
-            class="p-2 px-4 mx-auto rounded-lg text-center text-white font-semibold cursor-pointer plan1"
+            class="p-2 md:px-4 mx-auto rounded-lg text-center text-white font-semibold cursor-pointer plan1"
           >
             Single Plan
           </div>
           <div
             v-if="plan != 'ms'"
             @click="plan = 'ms'"
-            class="p-2 px-4 mx-auto rounded-lg text-center text-white font-semibold cursor-pointer deselect1"
+            class="p-2 md:px-4 mx-auto rounded-lg text-center text-white font-semibold cursor-pointer deselect1"
           >
             Single Plan
           </div>
@@ -265,87 +267,45 @@ export default class Login extends Vue {
   email = '';
   pw = '';
   plan = 'ms';
-
-  slider = document.querySelector('.gallery');
-  isDown = false;
-  startX = '';
-  scrollLeft = '';
-
-  test = 0;
-
-  mounted() {
-    //   slider = document.querySelector(".gallery");
-    // isDown = false;
-    // startX = '';
-    // scrollLeft = '';
-    // console.log('hi');
-
-    // this.slider.addEventListener('mousedown', (e) => {
-    // this.isDown = true;
-    //   this.slider.classList.add('active');
-    //   this.startX = e.pageX - slider.offsetLeft;
-    //   this.scrollLeft = this.slider.scrollLeft;
-    // });
-    // this.slider.addEventListener('mouseleave', () => {
-    //   this.isDown = false;
-    //   this.slider.classList.remove('active');
-    // });
-    // this.slider.addEventListener('mouseup', () => {
-    //   this.isDown = false;
-    //   this.slider.classList.remove('active');
-    // });
-    // this.slider.addEventListener('mousemove', (e) => {
-    //   if (!this.isDown) return;
-    //   e.preventDefault();
-    //   const x = e.pageX - this.slider.offsetLeft;
-    //   const SCROLL_SPEED = 3;
-    //   const walk = (x - this.startX) * SCROLL_SPEED;
-    //   this.slider.scrollLeft = this.scrollLeft - walk;
-    // });
-  }
 }
+// import { Vue, Component } from 'nuxt-property-decorator';
+// @Component({
+//   name: 'ShopIndex',
+//   layout: 'logo',
+// })
+// state = 1;
+//   state1 = true;
+//   state2 = false;
+//   state3 = false;
 
+//   email = '';
+//   pw = '';
+//   plan = 'ms';
+
+//   slider = document.querySelector('.gallery');
+//   isDown = false;
+//   startX = '';
+//   scrollLeft = '';
 // export default {
-//   data(){
+//   data() {
 //     return {
+//       state: 1,
+//       state1: true,
+//       state2: false,
+//       state3: false,
 
-//     }
+//       email: '',
+//       pw: '',
+//       plan: 'ms',
+//     };
 //   },
-//   mounted(){
-//     const slider = document.querySelector(".gallery");
-//     let isDown = false;
-//     let startX;
-//     let scrollLeft;
-//     slider.addEventListener("mousedown", (e) => {
-//       isDown = true;
-//       slider.classList.add("active");
-//       startX = e.pageX - slider.offsetLeft;
-//       scrollLeft = slider.scrollLeft;
-//     });
-//     slider.addEventListener("mouseleave", () => {
-//       isDown = false;
-//       slider.classList.remove("active");
-//     });
-//     slider.addEventListener("mouseup", () => {
-//       isDown = false;
-//       slider.classList.remove("active");
-//     });
-//     slider.addEventListener("mousemove", (e) => {
-//       if (!isDown) return;
-//       e.preventDefault();
-//       const x = e.pageX - slider.offsetLeft;
-//       const SCROLL_SPEED = 3;
-//       const walk = (x - startX) * SCROLL_SPEED;
-//       slider.scrollLeft = scrollLeft - walk;
-//     });
-//   }
-// }
+// };
 </script>
-<style>
+<style scoped>
 button {
   background-color: #ffb730;
   transition-duration: 0.25s;
-  width: 480px;
+  width: 100%;
 }
 button:hover {
   background-color: #faac1c;
@@ -374,4 +334,22 @@ button:hover {
 #choice2:hover .deselect2 {
   color: #89a9c8 !important;
 }
+@media (min-width: 480px) {
+  #state1 {
+    width: 480px;
+  }
+}
+.box {
+    padding: 15px;
+  }
+@media (min-width: 820px) {
+  .box {
+    width: 800px;
+    padding: 40px;
+  }
+  .head {
+    width: 800px;
+  }
+}
+
 </style>
