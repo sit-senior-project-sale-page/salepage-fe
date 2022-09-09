@@ -1,10 +1,7 @@
 export default {
   ssr: false,
-  target: 'server',
-  server: {
-    host: '0.0.0.0',
-    port: process.env.PORT || '12130',
-  },
+  target: 'static',
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'SALEPAGE',
@@ -179,19 +176,6 @@ export default {
       logout: '/',
       callback: '/',
       home: '/',
-    },
-  },
-
-  pwa: {
-    workbox: false,
-    manifest: {
-      lang: 'th',
-      orientation: 'portrait',
-      background_color: '#333333',
-      theme_color: '#333333',
-    },
-    icon: {
-      fileName: 'icon/icon512.png',
     },
   },
 

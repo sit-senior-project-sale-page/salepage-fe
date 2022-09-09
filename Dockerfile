@@ -9,8 +9,17 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn build
+RUN npm run generate
 
-EXPOSE 12130
 
-ENTRYPOINT ["yarn", "start"]
+
+FROM nginx:alpine as prod
+
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+
+WORKDIR /usr/share/nginx/html
+
+COPY --from=build /app/dist .
+
+EXPOSE 80
+
