@@ -1,6 +1,10 @@
 export default {
   ssr: false,
-  target: 'static',
+  target: 'server',
+  server: {
+    host: '0.0.0.0',
+    port: process.env.PORT || '12130',
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'SALEPAGE',
@@ -98,6 +102,7 @@ export default {
     'vue-sweetalert2/nuxt',
     '@nuxtjs/proxy',
     '@nuxtjs/pwa',
+    '@nuxtjs/robots',
     [
       'nuxt-lazy-load',
       {
