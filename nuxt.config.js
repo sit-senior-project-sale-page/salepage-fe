@@ -1,10 +1,6 @@
 export default {
   ssr: false,
   target: 'static',
-  server: {
-    host: '0.0.0.0',
-    port: process.env.PORT || '12130',
-  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'SALEPAGE',
