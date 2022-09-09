@@ -13,7 +13,7 @@ RUN npm run generate
 
 
 
-FROM nginx:alpine as prod
+FROM nginx:1-alpine as prod
 
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
