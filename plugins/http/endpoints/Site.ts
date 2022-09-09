@@ -1,19 +1,22 @@
 import Endpoint from './Endpoint';
 
 enum APIS {
-  GET_SITE = '/api/site',
-  POST_SITE = '/api/site',
+  GET_SITE = '/site',
+  GET_SITE_DOMAIN = '/site/domain',
+  POST_SITE = '/site',
 }
 
 export default class SiteEndpoint extends Endpoint {
   async getSites() {
     return await this.axiosWrapper
       .get(APIS.GET_SITE)
-      .then((res) => this.axiosWrapper.interceptor<any>(res));
+      .then((res) => this.axiosWrapper.interceptor<any>(res.data));
   }
 
-  async getSiteById(id: number) {
-    const res = await this.axiosWrapper.get(APIS.GET_SITE + `/${id}`);
+  async getSiteByDomain(domain: string) {
+    const res = await this.axiosWrapper.get(
+      APIS.GET_SITE_DOMAIN + `/${domain}`
+    );
     return this.axiosWrapper.interceptor<any>(res);
   }
 

@@ -1,6 +1,6 @@
 export default {
-  ssr: true,
-  target: 'server',
+  ssr: false,
+  target: 'static',
   server: {
     host: '0.0.0.0',
     port: process.env.PORT || '12130',
@@ -75,7 +75,6 @@ export default {
     '~/plugins/helper',
     '~/plugins/axios.js',
     '~/plugins/iconify',
-    { src: '~/plugins/gtag.js', ssr: false },
     { src: '~/plugins/splide.client.js', ssr: false },
   ],
 
@@ -134,8 +133,8 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // baseURL: process.env.API_BASE_URL,
-    credentials: true,
-    proxy: true,
+    // credentials: true,
+    // proxy: true,
   },
   proxy: {
     '/api/': {
