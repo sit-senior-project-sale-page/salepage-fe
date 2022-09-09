@@ -102,8 +102,6 @@ export default {
     'vue-sweetalert2/nuxt',
     '@nuxtjs/proxy',
     '@nuxtjs/pwa',
-    '@nuxtjs/sitemap',
-    '@nuxtjs/robots',
     [
       'nuxt-lazy-load',
       {
@@ -194,30 +192,6 @@ export default {
     icon: {
       fileName: 'icon/icon512.png',
     },
-  },
-
-  sitemap: {
-    defaults: {
-      changefreq: 'weekly',
-      priority: 0.5,
-      lastmod: new Date(),
-    },
-    routes: [
-      {
-        url: '/',
-        priority: 1,
-      },
-      {
-        url: '/register',
-        priority: 1,
-      },
-    ],
-  },
-
-  robots: {
-    UserAgent: '*',
-    Allow: '/',
-    Sitemap: '/sitemap.xml',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
