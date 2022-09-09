@@ -1,21 +1,4 @@
 #!/usr/bin/env bash
-FROM node:14.17-alpine3.10
-
-WORKDIR /app
-
-COPY ./package.json ./
-
-RUN yarn install 
-
-COPY . .
-
-RUN yarn build
-
-EXPOSE 12130
-
-ENTRYPOINT ["yarn", "start"]
-
-
 FROM node:14.17-alpine3.10 as build
 
 ARG API_BASE_URL
