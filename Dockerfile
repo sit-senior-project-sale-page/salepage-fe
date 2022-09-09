@@ -12,14 +12,19 @@ COPY . .
 RUN npm run generate
 
 
-
-FROM nginx:1-alpine as prod
-
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-
-WORKDIR /usr/share/nginx/html
-
-COPY --from=build /app/dist .
-
-EXPOSE 80
-
+FROM registry.access.redhat.com/ubi8:8.0 as prod 
+LABEL version="1.0" \
+    description="To Do List application front-end" \
+    creationDate="2017-12-25" \
+    updatedDate="2019-11-28"
+RUN yum install -y --disableplugin=subscription-manager --nodocs \
+    nginx nginx-mod-http-perl \
+    && yum clean all
+COPY /nginx/nginx.conf /etc/nginx/
+RUN touch /run/nginx.pid \
+    && chgrp -R 0 /var/log/nginx /run/nginx.pid \
+    && chmod -R g+rwx /var/log/nginx /run/nginx.pid
+COPY dist /usr/share/nginx/html
+EXPOSE 8080
+USER 1001
+CMD nginx -g "daemon off;"
