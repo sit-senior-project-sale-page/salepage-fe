@@ -85,7 +85,7 @@
                       "
                     >
                       <img
-                        src="https://www.supersafetythailand.com/wp-content/uploads/2019/10/%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B9%89%E0%B8%B2.jpg"
+                        src="https://inwfile.com/s-fn/mj7wnt.jpg"
                         class="object-cover h-36 w-36"
                         style="border-radius: 12px 12px 0 0"
                       />
@@ -232,8 +232,8 @@ import { Vue, Component } from 'nuxt-property-decorator';
 interface ProductOption {
   name: string;
   quantity: number;
-  price?: string;
-  discountPrice?: any;
+  price?: number;
+  discountPrice?: number;
 }
 
 interface Product {
@@ -274,8 +274,8 @@ export default class salepage extends Vue {
         {
           name: '',
           quantity: 0,
-          price: '',
-          discountPrice: null,
+          price: 0,
+          discountPrice: 0,
         },
       ],
     },
@@ -293,10 +293,12 @@ export default class salepage extends Vue {
     //   'location',
     //   window.location.hostname.split('.').slice(0, -2).join('.')
     // );
-    const windowLocation = window.location.hostname
-      .split('.')
-      .slice(0, -2)
-      .join('.');
+    // const windowLocation = window.location.hostname
+    //   .split('.')
+    //   .slice(0, -2)
+    //   .join('.');
+
+    const windowLocation = 'test-fe';
 
     const response = await this.$api.site.getSiteByDomain(windowLocation);
 
@@ -333,21 +335,13 @@ export default class salepage extends Vue {
     },
   ];
 
-  previewimg =
-    'https://scontent.fbkk2-8.fna.fbcdn.net/v/t39.30808-6/271755970_363997708867209_1939652208978762707_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=a26aad&_nc_ohc=80WtpIKnmpMAX_pQTOG&_nc_ht=scontent.fbkk2-8.fna&oh=00_AT-Xhb0tUb0oQDUHTtA-xfZYk-vRtM7lk_kVq2sRard4lQ&oe=63161833';
+  previewimg = 'https://inwfile.com/s-fn/mj7wnt.jpg';
 
   minprice = Math.min(...this.options.map((item) => item.price));
 
   maxprice = Math.max(...this.options.map((item) => item.price));
 
   price = this.minprice + ' - ' + this.maxprice + ' ฿';
-
-  logo =
-    'https://scontent.fbkk2-8.fna.fbcdn.net/v/t39.30808-6/271755970_363997708867209_1939652208978762707_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=a26aad&_nc_ohc=80WtpIKnmpMAX_pQTOG&_nc_ht=scontent.fbkk2-8.fna&oh=00_AT-Xhb0tUb0oQDUHTtA-xfZYk-vRtM7lk_kVq2sRard4lQ&oe=63161833';
-
-  shopname = 'terryofficial.th';
-  detail =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.              Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum vestibulum. Morbi a eleifend magna. Nam metus lacus, porttitor eu mauris a, blandit ultrices nibh. Mauris sit amet magna non ligula vestibulum eleifend. Nulla varius volutpat turpis sed lacinia. Nam eget mi in purus lobortis eleifend. Sed nec ante dictum sem condimentum ullamcorper quis venenatis nisi. Proin vitae facilisis nisi, ac posuere leo.';
 
   quantity = 1;
   select = '';
