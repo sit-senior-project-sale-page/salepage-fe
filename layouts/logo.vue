@@ -1,11 +1,14 @@
 <template>
-    <div>
-        <div class="absolute top-6 left-10">
-            <img src="../assets/image/upforsale.png" style="height: 80px;"/>
-        </div>
-        
-        <Nuxt />
+  <div class="">
+    <div class="px-8 w-screen py-6 absolute">
+      <img
+        src="../assets/image/upforsale.png"
+        class="h-14 md:h-20 mx-auto md:mx-0"
+      />
     </div>
+
+    <Nuxt />
+  </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator';

@@ -1,3 +1,5 @@
 <template>
-    <div class="bg-[#F7F7F7]"></div>
+    <div class="">
+        <Nuxt />
+    </div>
 </template>
