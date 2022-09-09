@@ -23,7 +23,7 @@ COPY /nginx/nginx.conf /etc/nginx/
 RUN touch /run/nginx.pid \
     && chgrp -R 0 /var/log/nginx /run/nginx.pid \
     && chmod -R g+rwx /var/log/nginx /run/nginx.pid
-COPY --from=build /app /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 8080
 USER 1001
 CMD nginx -g "daemon off;"
