@@ -11,7 +11,6 @@ COPY . .
 
 RUN npm run generate
 
-
 FROM registry.access.redhat.com/ubi8:8.0 as prod 
 LABEL version="1.0" \
     description="To Do List application front-end" \
@@ -24,7 +23,7 @@ COPY /nginx/nginx.conf /etc/nginx/
 RUN touch /run/nginx.pid \
     && chgrp -R 0 /var/log/nginx /run/nginx.pid \
     && chmod -R g+rwx /var/log/nginx /run/nginx.pid
-COPY dist /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 8080
 USER 1001
 CMD nginx -g "daemon off;"
