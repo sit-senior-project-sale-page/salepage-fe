@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-FROM node:14.17-alpine3.10
+FROM node:14.17-alpine3.10 as build 
 
 WORKDIR /app
 
