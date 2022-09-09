@@ -132,12 +132,12 @@ export default {
     // credentials: true,
     // proxy: true,
   },
-  proxy: {
-    '/api/': {
-      target: process.env.API_BASE_URL,
-      pathRewrite: { '^/api/': '' },
-    },
-  },
+  // proxy: {
+  //   '/api/': {
+  //     target: process.env.API_BASE_URL,
+  //     pathRewrite: { '^/api/': '' },
+  //   },
+  // },
 
   fontawesome: {
     component: 'fa',
