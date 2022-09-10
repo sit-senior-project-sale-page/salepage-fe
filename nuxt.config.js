@@ -1,10 +1,9 @@
 export default {
-  ssr: false,
+  ssr: true,
   target: 'server',
   server: {
-    port: 8080, // default: 3000
-    // host: '0.0.0.0', // default: localhost,
-    // timing: false
+    host: '0.0.0.0',
+    port: process.env.PORT || '12130',
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
