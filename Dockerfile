@@ -11,6 +11,6 @@ COPY . .
 
 RUN yarn build
 
-EXPOSE 12130
+EXPOSE 8080
 
 ENTRYPOINT ["yarn", "start"]
