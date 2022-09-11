@@ -453,14 +453,14 @@ export default class salepage extends Vue {
   }
 
   async fetch() {
-    console.log(
-      'location',
-      window.location.hostname.split('.').slice(0, -2).join('.')
-    );
     const windowLocation = window.location.hostname
       .split('.')
       .slice(0, -2)
       .join('.');
+
+    console.log('windowLocation', windowLocation);
+    console.log('test');
+    console.log('config', this.$config);
 
     const response = await this.$api.site.getSiteByDomain(windowLocation);
     console.log('response', response);
