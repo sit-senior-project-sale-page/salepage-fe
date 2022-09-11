@@ -453,7 +453,7 @@ export default class salepage extends Vue {
   }
 
   async fetch() {
-    const windowLocation = 'panus2544.dmr.co.th'.split('.')[0];
+    const windowLocation = window.location.hostname.split('.')[0];
 
     console.log('windowLocation', windowLocation);
 
