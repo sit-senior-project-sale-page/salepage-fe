@@ -20,6 +20,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push
         uses: docker/build-push-action@v2
+
         with:
           push: true
+          build-args: API_BASE_URL=${{ secrets.API_BASE_URL }}
           tags: ghcr.io/sit-senior-project-sale-page/salepage-fe:dev
