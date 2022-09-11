@@ -459,8 +459,6 @@ export default class salepage extends Vue {
       .join('.');
 
     console.log('windowLocation', windowLocation);
-    console.log('test');
-    console.log('config', this.$config);
 
     const response = await this.$api.site.getSiteByDomain(windowLocation);
     console.log('response', response);
