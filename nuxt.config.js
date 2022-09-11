@@ -1,8 +1,6 @@
 export default {
   publicRuntimeConfig: {
-    axios: {
-      baseURL: process.env.API_BASE_URL,
-    },
+    baseURL: process.env.BASE_URL || 'https://api.dmt.co.th',
   },
   ssr: true,
   target: 'server',
