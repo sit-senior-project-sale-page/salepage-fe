@@ -1,6 +1,8 @@
 export default {
-  publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL || 'https://api.dmt.co.th',
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.API_BASE_URL,
+    },
   },
   ssr: true,
   target: 'server',
@@ -134,7 +136,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: process.env.API_BASE_URL,
+    baseURL: 'https://api.dmr.co.th',
     // credentials: true,
     // proxy: true,
   },
