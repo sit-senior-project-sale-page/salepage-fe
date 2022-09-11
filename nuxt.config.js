@@ -1,4 +1,9 @@
 export default {
+  publicRuntimeConfig: {
+    axios: {
+      baseURL: process.env.API_BASE_URL,
+    },
+  },
   ssr: true,
   target: 'server',
   server: {
