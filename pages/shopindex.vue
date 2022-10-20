@@ -1,66 +1,5 @@
 <template>
-  <div class="pt-12">
-    <div class="fixed top-0 body w-screen h-screen"></div>
-    <div
-      class="p-10 bg-white text-center lg:w-10/12 h-36 mx-auto flex lg:rounded-md"
-    >
-      <span class="my-auto mx-auto text-gray-300">commercial banner</span>
-    </div>
-    <div
-      class="w-full lg:w-10/12 xl:w-8/12 pb-20 md:pb-0 bg-white lg:mx-auto lg:rounded-md align-middle mt-10"
-    >
-      <div class="flex">
-        <div
-          v-if="menu1"
-          class="w-full text-center p-5 menuactive text-xs md:text-base font-semibold"
-        >
-          Manage Your Sale Page
-        </div>
-        <div
-          v-if="menu1 == false"
-          @click="(menu1 = true), (menu2 = false)"
-          class="w-full text-center p-5 menu1 cursor-pointer text-xs md:text-base font-semibold"
-          style="background-color: #ececec"
-        >
-          Manage Your Sale Page
-        </div>
-        <div
-          v-if="menu2"
-          class="w-full text-center p-5 menuactive text-xs md:text-base font-semibold"
-        >
-          Manage Order
-        </div>
-        <div
-          v-if="menu2 == false"
-          @click="(menu1 = false), (menu2 = true)"
-          class="w-full text-center p-5 menu2 cursor-pointer text-xs md:text-base font-semibold"
-          style="background-color: #ececec"
-        >
-          Manage Order
-        </div>
-      </div>
-      <div
-        v-if="menu1"
-        class="p-5 md:p-10 w-full grid gap-5 md:grid-cols-2 justify-items-center mt-5"
-      >
-        <div v-for="web in webs" :key="web">
-          <BaseCard :web="web" />
-        </div>
-        
-        <nuxt-link to="createSalepage">
-          <div
-            class="bg-gray-200 rounded-md flex text-center"
-            style="width: 325px; height: 125px"
-          >
-            <span class="mx-auto my-auto text-5xl font-bold text-white">+</span>
-          </div></nuxt-link
-        >
-      </div>
-      <div v-if="menu2" class="p-10 py-16 flex justify-center">
-        No order yet
-      </div>
-    </div>
-  </div>
+  <div></div>
 </template>
 
 <script lang="ts">
@@ -86,10 +25,7 @@ export default class ShopIndex extends Vue {
 
     this.webs = result.data;
     console.log(this.webs);
-    
-
   }
-  
 }
 </script>
 <style scoped>

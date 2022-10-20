@@ -13,13 +13,52 @@
           <div class="md:flex">
             <div>
               <div>
-                <img :src="productImage" />
+                <img
+                  :src="previewimg"
+                  class="preview object-cover md:rounded-lg"
+                />
+              </div>
+              <div
+                class="p-3 px-6 rounded-xl mx-6 md:mx-auto my-6 md:flex hidden"
+                style="background-color: #f6f6f6"
+              >
+                <div>
+                  <img
+                    :src="logo"
+                    class="h-14 w-14 rounded-full object-cover"
+                    style="outline-width: 1px; outline-color: #e9e9e9"
+                  />
+                </div>
+                <div class="font-bold my-auto ml-5">
+                  {{ site.domain }}
+                </div>
               </div>
             </div>
             <div class="w-auto">
               <div class="mt-5 mb-7 mx-6 space-y-3">
                 <div class="font-bold text-xl md:text-3xl">
                   {{ site.Product.name }}
+                </div>
+                <div
+                  class="font-bold text-xl md:text-2xl xl:text-3xl"
+                  style="color: #ffb730"
+                >
+                  <span v-if="select == ''">{{ price }} </span
+                  ><span v-if="select != ''">{{ total }} ฿ </span>
+                </div>
+              </div>
+
+              <div
+                class="p-3 px-6 rounded-xl mx-6 md:mx-auto my-6 flex md:hidden"
+                style="background-color: #f6f6f6"
+              >
+                <img
+                  :src="logo"
+                  class="w-14 h-14 rounded-full object-cover"
+                  style="outline-width: 1px; outline-color: #e9e9e9"
+                />
+                <div class="font-bold my-auto ml-5">
+                  {{ site.domain }}
                 </div>
               </div>
 
@@ -39,23 +78,23 @@
                   >
                     <div
                       :id="option.name"
-                      class="mb-3 option cursor-pointer"
-                      @click="selectProductOption(option)"
+                      class="mb-3 option cursor-pointer border-solid border-2 border-orange-500 rounded-lg"
+                      @click="
+                        (select = option.name) +
+                          (quantity = 1) +
+                          (op = option.price) +
+                          (total = option.price * quantity)
+                      "
                     >
                       <img
-                        :src="productImage"
+                        src="https://www.supersafetythailand.com/wp-content/uploads/2019/10/%E0%B8%A2%E0%B8%B2%E0%B8%9A%E0%B9%89%E0%B8%B2.jpg"
                         class="object-cover h-36 w-36"
                         style="border-radius: 12px 12px 0 0"
                       />
                       <div
-                        class="text-center p-2 text-xs text-white bg-gray-500"
+                        class="text-center p-2 text-xs text-white optionname"
                       >
                         {{ option.name }}
-                      </div>
-                      <div
-                        class="text-center p-2 bg-red-500 text-xs text-white rounded-b-lg"
-                      >
-                        {{ option.price }} บาท
                       </div>
                     </div>
                   </div>
@@ -96,9 +135,18 @@
                     </div>
                   </div>
 
+                  <div v-if="select != ''" class="ml-16 totalbox">
+                    <div class="text-lg font-bold mb-4">Total price</div>
+                    <div
+                      class="text-xl font-bold h-10 flex"
+                      style="color: #ffb730"
+                    >
+                      <div class="my-auto">{{ total }} ฿</div>
+                    </div>
+                  </div>
+
                   <div
-                    class="w-full h-12 ml-8 mt-auto rounded-lg font-bold text-white text-center cursor-pointer buybutton md:flex"
-                    @click.prevent="addToCart()"
+                    class="w-full h-12 ml-8 mt-auto rounded-lg font-bold text-white text-center cursor-pointer buybutton hidden md:flex"
                   >
                     <div class="mx-auto my-auto">Add To Cart</div>
                   </div>
@@ -107,80 +155,28 @@
 
               <div class="mx-6 mb-10 md:hidden">
                 <div class="font-bold text-lg">ตะกร้าสินค้า</div>
-                <h1 v-if="!cartItem">ไม่มีสินค้า</h1>
                 <table class="table-auto">
                   <tbody>
-                    <tr v-for="(cart, index) in cartItem" :key="cart.ref">
-                      <td>{{ cart.name }} X {{ cart.quantity }} ชิ้น</td>
-                      <td>ราคารวม {{ cart.price }} บาท</td>
-                      <td>
-                        <button
-                          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                          @click="deleteCartItem(index)"
-                        >
-                          ลบ
-                        </button>
-                      </td>
+                    <tr>
+                      <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
+                      <td>Malcolm Lockyer</td>
+                      <td>1961</td>
+                    </tr>
+                    <tr>
+                      <td>Witchy Woman</td>
+                      <td>The Eagles</td>
+                      <td>1972</td>
+                    </tr>
+                    <tr>
+                      <td>Shining Star</td>
+                      <td>Earth, Wind, and Fire</td>
+                      <td>1975</td>
                     </tr>
                   </tbody>
                 </table>
-
-                <div>
-                  <div class="mb-4">
-                    <label
-                      class="block text-gray-700 text-sm font-bold mb-2"
-                      for="name"
-                    >
-                      ชื่อลูกค้า
-                    </label>
-                    <input
-                      id="name"
-                      v-model="customerName"
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      type="text"
-                      placeholder="ชื่อลูกค้า"
-                    />
-                  </div>
-
-                  <div class="mb-4">
-                    <label
-                      class="block text-gray-700 text-sm font-bold mb-2"
-                      for="name"
-                    >
-                      เบอร์โทรศัพท์
-                    </label>
-                    <input
-                      id="name"
-                      v-model="customerPhoneNumber"
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      type="text"
-                      placeholder="เบอร์โทรศัพท์"
-                    />
-                  </div>
-
-                  <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">
-                      ที่อยู่ในการจัดส่งสินค้า
-                      <textarea
-                        v-model="customerAddress"
-                        class="shadow form-textarea mt-1 block w-full border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        rows="5"
-                        placeholder="Textarea"
-                      ></textarea>
-                    </label>
-                  </div>
-                </div>
-
-                <button
-                  class="w-full p-4 rounded-xl text-lg font-bold text-white text-center cursor-pointer buybutton"
-                  @click.prevent="buy()"
-                >
-                  ยืนยันการสั่งซื้อ
-                </button>
               </div>
             </div>
           </div>
-
           <div class="mx-6 mb-10 hidden md:block">
             <div class="font-bold text-lg">Product details</div>
             <div class="mt-4">{{ site.Product.detail }}</div>
@@ -188,76 +184,25 @@
 
           <div class="mx-6 mb-10 hidden md:block">
             <div class="font-bold text-lg">ตะกร้าสินค้า</div>
-            <h1 v-if="cartItem.length == 0">ไม่มีสินค้า</h1>
             <table class="table-auto">
               <tbody>
-                <tr v-for="(cart, index) in cartItem" :key="cart.ref">
-                  <td>{{ cart.name }} X {{ cart.quantity }} ชิ้น</td>
-                  <td>ราคารวม {{ cart.price }} บาท</td>
-                  <td>
-                    <button
-                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                      @click="deleteCartItem(index)"
-                    >
-                      ลบ
-                    </button>
-                  </td>
+                <tr>
+                  <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
+                  <td>Malcolm Lockyer</td>
+                  <td>1961</td>
+                </tr>
+                <tr>
+                  <td>Witchy Woman</td>
+                  <td>The Eagles</td>
+                  <td>1972</td>
+                </tr>
+                <tr>
+                  <td>Shining Star</td>
+                  <td>Earth, Wind, and Fire</td>
+                  <td>1975</td>
                 </tr>
               </tbody>
             </table>
-
-            <div>
-              <div class="mb-4">
-                <label
-                  class="block text-gray-700 text-sm font-bold mb-2"
-                  for="name"
-                >
-                  ชื่อลูกค้า
-                </label>
-                <input
-                  id="name"
-                  v-model="customerName"
-                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  type="text"
-                  placeholder="ชื่อลูกค้า"
-                />
-              </div>
-
-              <div class="mb-4">
-                <label
-                  class="block text-gray-700 text-sm font-bold mb-2"
-                  for="name"
-                >
-                  เบอร์โทรศัพท์
-                </label>
-                <input
-                  id="name"
-                  v-model="customerPhoneNumber"
-                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  type="text"
-                  placeholder="เบอร์โทรศัพท์"
-                />
-              </div>
-
-              <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">
-                  ที่อยู่ในการจัดส่งสินค้า
-                  <textarea
-                    v-model="customerAddress"
-                    class="shadow form-textarea mt-1 block w-full border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    rows="5"
-                    placeholder="Textarea"
-                  ></textarea>
-                </label>
-              </div>
-            </div>
-
-            <button
-              class="w-full p-4 rounded-xl text-lg font-bold text-white text-center cursor-pointer buybutton"
-              @click.prevent="buy()"
-            >
-              ยืนยันการสั่งซื้อ
-            </button>
           </div>
 
           <div class="w-full flex flex-col justify-center mt-10 pb-32 md:pb-0">
@@ -269,35 +214,37 @@
               web salepage by upforsale
             </div>
           </div>
+
+          <div class="fixed bottom-0 w-screen p-3 pt-24 buybox md:hidden">
+            <div
+              class="w-full p-4 rounded-xl text-lg font-bold text-white text-center cursor-pointer buybutton"
+            >
+              Add To Cart
+            </div>
+          </div>
         </div>
-      </div>
+      </div> {{options}}
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { thisTypeAnnotation } from '@babel/types';
 import { Vue, Component } from 'nuxt-property-decorator';
 
 interface ProductOption {
-  id: number;
   name: string;
-  price: number;
-  discountPrice: number;
-}
-
-interface ProductImage {
-  id: number;
-  name: string;
-  data: string;
-  productId: number;
+  quantity: number;
+  price?: number;
+  discountPrice?: any;
+  img: string;
 }
 
 interface Product {
-  id: number;
   name: string;
   discountCode?: any;
   detail: string;
-  ProductImage: ProductImage[];
+  ProductImage: any[];
   ProductOption: ProductOption[];
 }
 
@@ -310,76 +257,45 @@ interface Site {
   messengerAccountId: string;
   Product: Product;
 }
-
-interface ProductCart {
-  productId: number;
-  productOptionId: number;
-  ref: number;
-  name: string;
-  quantity: number;
-  price: number;
-}
-interface OrderDetail {
-  productId: number;
-  productOptionId: number;
-  quantity: number;
-  priceAmount: number;
-}
-
-interface CreateOrderDto {
-  customerName: string;
-  customerPhoneNumber: string;
-  customerAddress: string;
-  customerPaymentSlip: string;
-  totalAmount: number;
-  orderDetail: OrderDetail[];
-}
-
 @Component({
   name: 'salepage',
   //   layout: 'logo',
 })
 export default class salepage extends Vue {
   site: Site = {
-    domain: '',
+    domain: 'cham.him',
     shortLink: null,
     themeColor: null,
     isSubDomain: true,
     lineAccountId: '',
     messengerAccountId: '',
     Product: {
-      id: 1,
       name: '',
       discountCode: null,
-      detail: '',
-      ProductImage: [],
+      detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.',
+      ProductImage: [
+        'https://cf.shopee.co.th/file/302fb20a8bea507757cd77c9ac29f5fc',
+        'https://cf.shopee.co.th/file/7928558494b8919ec1f7c949afca3343',
+        'https://cf.shopee.co.th/file/9ed7cadefcb3ec42f820d8cd5ba0a38c',
+      ],
       ProductOption: [
         {
-          id: 1,
-          name: '',
-          price: 1,
-          discountPrice: 1,
+          name: 'BLUE',
+          quantity: 0,
+          price: 100,
+          discountPrice: null,
+          img: 'https://cf.shopee.co.th/file/7928558494b8919ec1f7c949afca3343'
+        },
+        {
+          name: 'BLUE',
+          quantity: 0,
+          price: 1000,
+          discountPrice: null,
+          img: 'https://cf.shopee.co.th/file/7928558494b8919ec1f7c949afca3343'
         },
       ],
     },
   };
-
-  customerName: string = '';
-  customerPhoneNumber: string = '';
-  customerAddress: string = '';
-  customerPaymentSlip: string = 'empthy';
-  totalAmount: number = 0;
-  orderDetail: OrderDetail[] = [];
-
-  showFormOrder = false;
-
-  selectedItem!: ProductOption;
-
-  cartItem: ProductCart[] = [];
-
-  deleteCartItem(index: number) {
-    this.cartItem.splice(index, 1);
-  }
 
   activated() {
     // Call fetch again if last fetch more than 30 sec ago
@@ -388,82 +304,20 @@ export default class salepage extends Vue {
     }
   }
 
-  addToCart() {
-    if (!this.selectedItem) {
-      this.$swal.fire('โปรดเลือกสินค้า');
-    } else {
-      this.cartItem.push({
-        ref: new Date().getTime(),
-        productId: this.site?.Product.id,
-        productOptionId: this.selectedItem.id,
-        name: this.selectedItem.name,
-        quantity: this.quantity,
-        price: this.selectedItem.price * this.quantity,
-      });
-    }
-
-    console.log(this.cartItem);
-  }
-
-  async buy() {
-    if (this.cartItem.length < 1) {
-      this.$swal.fire('โปรดเพิ่มสินค้าลงตะกร้า');
-    }
-
-    this.showFormOrder = true;
-    console.log('cartItem', this.cartItem);
-    console.log(this.customerName);
-    console.log(this.customerAddress);
-    console.log(this.customerPhoneNumber);
-    console.log(this.customerPaymentSlip);
-    this.totalAmount = this.cartItem.reduce(
-      (partialSum, a) => partialSum + a.price,
-      0
-    );
-    this.orderDetail = this.cartItem.map((a) => {
-      return {
-        productId: a.productId,
-        productOptionId: a.productOptionId,
-        quantity: a.quantity,
-        priceAmount: a.price,
-      };
-    });
-    console.log(this.totalAmount);
-    console.log(this.orderDetail);
-
-    const data: CreateOrderDto = {
-      customerAddress: this.customerAddress,
-      customerName: this.customerName,
-      customerPaymentSlip: this.customerPaymentSlip,
-      customerPhoneNumber: this.customerPhoneNumber,
-      totalAmount: this.totalAmount,
-      orderDetail: this.orderDetail,
-    };
-
-    const response = await this.$api.order.createOrder(data);
-    console.log(response);
-
-    if (response.success && response.data) {
-      this.$swal.fire('ซื้อสินค้าสำเร็จ');
-    }
-  }
-
-  selectProductOption(productOption: ProductOption) {
-    this.selectedItem = productOption;
-  }
-
   async fetch() {
-    const windowLocation = window.location.hostname.split('.')[0];
-
-    console.log('windowLocation', windowLocation);
+    // console.log(
+    //   'location',
+    //   window.location.hostname.split('.').slice(0, -2).join('.')
+    // );
+    const windowLocation = window.location.hostname
+      .split('.')
+      .slice(0, -2)
+      .join('.');
 
     const response = await this.$api.site.getSiteByDomain(windowLocation);
-    console.log('response', response);
 
     if (response.success && response.data) {
       this.site = response.data;
-    } else {
-      this.$swal.fire(response.message);
     }
     // console.log('result', this.site);
     return response;
@@ -473,19 +327,45 @@ export default class salepage extends Vue {
     return this.site;
   }
 
-  get productImage() {
-    return 'data:image/png;base64,' + this.site?.Product?.ProductImage[0]?.data;
-  }
+  // web = 'test'
+  product = this.site.Product
+  options = this.product.ProductOption
+  //  [
+  //   {
+  //     optionname: 'Single Pack',
+  //     optionimg:
+  //       'https://lzd-img-global.slatic.net/g/p/2d7b627b9fd488c4435d5fa90acb709f.jpg_2200x2200q80.jpg_.webp',
+  //     price: 690,
+  //   },
+  //   {
+  //     optionname: 'Double Pack',
+  //     optionimg:
+  //       'https://cf.shopee.co.th/file/ec56c22580d0203c6c37cd64a08d401d',
+  //     price: 1290,
+  //   },
+  //   {
+  //     optionname: 'Test',
+  //     optionimg:
+  //       'https://miro.medium.com/max/1200/1*W5MGNZ16WYXSOxmHWNwmYw.png',
+  //     price: 690,
+  //   },
+  // ];
 
-  minprice = Math.min(
-    ...this.site.Product.ProductOption.map((item) => item.price)
-  );
+  previewimg = 'https://cf.shopee.co.th/file/ea4efac6adc6a9341c829c376258644c';
 
-  maxprice = Math.max(
-    ...this.site.Product.ProductOption.map((item) => item.price)
-  );
+  
 
-  price = this.minprice + ' - ' + this.maxprice + ' ฿';
+  // minprice = Math.min(...this.options.map((item) => item.price));
+
+  // maxprice = Math.max(...this.options.map((item) => item.price));
+
+  // price = this.minprice + ' - ' + this.maxprice + ' ฿';
+  // console.log(this.options);
+  logo = 'https://cf.shopee.co.th/file/0626618d42bae52b9eedc95d97abf714_tn';
+
+  shopname = 'terryofficial.th';
+  detail =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.              Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum vestibulum. Morbi a eleifend magna. Nam metus lacus, porttitor eu mauris a, blandit ultrices nibh. Mauris sit amet magna non ligula vestibulum eleifend. Nulla varius volutpat turpis sed lacinia. Nam eget mi in purus lobortis eleifend. Sed nec ante dictum sem condimentum ullamcorper quis venenatis nisi. Proin vitae facilisis nisi, ac posuere leo.';
 
   quantity = 1;
   select = '';
@@ -571,5 +451,9 @@ export default class salepage extends Vue {
 }
 .buybutton:hover {
   background-color: #0c4e8c;
+}
+.logo {
+  width: 40px !important;
+  height: 40px !important;
 }
 </style>
