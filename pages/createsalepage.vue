@@ -136,6 +136,29 @@ import NavBar from '~/components/NavBar.vue';
 import OptionCreateCard from '~/components/OptionCreateCard.vue';
 export default {
   components: { NavBar, OptionCreateCard },
+  data(){
+    return{
+        image: null,
+    }
+  },
+  methods: {
+    selectImage() {
+      this.$refs.fileInput.click();
+    },
+    pickImage(event) {
+      let input = this.$refs.fileInput;
+      let file = input.files;
+      if (file && file[0]) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.artistImage = e.target.result;
+        };
+        reader.readAsDataURL(file[0]);
+        this.$emit("input", file[0]);
+      }
+      this.selectedImage = event.target.files[0];
+    },
+  }
 };
 </script>
 <style scoped>
