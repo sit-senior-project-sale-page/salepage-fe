@@ -583,7 +583,7 @@
       </div>
     </div>
     <!-- order detail -->
-    <OrderDetail class="hidden"></OrderDetail>
+    <OrderDetail class=""></OrderDetail>
   </div>
 </template>
 <script>
