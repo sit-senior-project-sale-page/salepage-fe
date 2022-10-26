@@ -13,7 +13,7 @@
           <div class="md:flex">
             <!--product image-->
             <div>
-              <img :src="productImage" />
+              <img :src="previewImage(site.Product.ProductImage[0].data)" />
             </div>
 
             <div class="w-auto">
@@ -53,7 +53,7 @@
                         "
                       >
                         <img
-                          :src="productImage"
+                          :src="previewImage(option.dataImage)"
                           class="object-cover h-36 w-36"
                         />
                         <div
@@ -326,6 +326,7 @@ interface ProductOption {
   name: string;
   price: number;
   discountPrice: number;
+  dataImage: string;
 }
 
 interface ProductImage {
@@ -402,6 +403,7 @@ export default class salepage extends Vue {
           name: '',
           price: 1,
           discountPrice: 1,
+          dataImage: '',
         },
       ],
     },
@@ -518,7 +520,7 @@ export default class salepage extends Vue {
 
     console.log('windowLocation', windowLocation);
 
-    const response = await this.$api.site.getSiteByDomain('test-pk01');
+    const response = await this.$api.site.getSiteByDomain('xver3');
     console.log('response', response);
 
     if (response.success && response.data) {
@@ -534,8 +536,8 @@ export default class salepage extends Vue {
     return this.site;
   }
 
-  get productImage() {
-    return 'data:image/png;base64,' + this.site?.Product?.ProductImage[0]?.data;
+  previewImage(params: any) {
+    return 'data:image/png;base64,' + params;
   }
 
   minprice = Math.min(
