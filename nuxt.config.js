@@ -3,7 +3,7 @@ export default {
   target: 'server',
   server: {
     host: '0.0.0.0',
-    port: process.env.PORT || '12130',
+    port: process.env.PORT || '8080',
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -121,11 +121,7 @@ export default {
     defaultTimeZone: 'Asia/Bangkok',
   },
 
-  sweetalert: {
-    confirmButtonColor: '#CD9900',
-    cancelButtonColor: '#F87171',
-    background: '#1F2937',
-  },
+  sweetalert: {},
 
   toast: {
     position: 'bottom-center',
