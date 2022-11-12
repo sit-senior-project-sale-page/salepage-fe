@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div style="background-color: #161c2d">
     <Loading v-if="$fetchState.pending" />
     <div v-else>
       <div class="flex">
-        <div
+        <!-- <div
           class="fixed w-screen h-screen top-0"
-          style="background-color: #0f385f; z-index: -10"
-        ></div>
+          style="background-color: #161C2D; z-index: -10"
+        ></div> -->
         <div
           class="md:m-10 md:rounded-3xl md:p-10 bg-white lg:my-24 w-full box"
         >
@@ -16,29 +16,31 @@
               <img :src="previewImage(site.Product.ProductImage[0].data)" />
             </div>
 
-            <div class="w-auto">
+            <div class="w-auto px-5">
               <!--product name-->
-              <div class="mt-5 mb-7 mx-6 space-y-3">
+              <div class="mt-5 mb-7 space-y-3">
                 <div class="font-bold text-xl md:text-3xl">
                   {{ site.Product.name }}
                 </div>
               </div>
 
               <!--product detail-->
-              <div class="mx-6 mb-10">
-                <div class="font-bold text-lg">Product details</div>
-                <div class="mt-4">{{ site.Product.detail }}</div>
+              <div class="mb-10">
+                <div class="font-bold">Product details</div>
+                <div class="mt-2" style="color: #555555;">{{ site.Product.detail }}</div>
               </div>
 
               <!--product option-->
-              <div class="mx-6 mb-10">
-                <div class="font-bold text-lg mb-4">Product options</div>
+              <div class="mb-10">
+                
+                <div class="font-bold mb-2">Product options</div>
                 <div
                   class="grid grid-cols-2 gap-2 lg:grid-cols-3 col-span-5 justify-items-center productoptions"
                 >
                   <div
                     v-for="option in site.Product.ProductOption"
                     :key="option.id"
+                    @click="(selected = option.price) + (quantity = 1)"
                   >
                     <div
                       class="mb-3 option cursor-pointer"
@@ -48,7 +50,7 @@
                         class="rounded-lg overflow-hidden border-2"
                         :class="
                           selectedItemId == option.id
-                            ? 'border-black'
+                            ? 'optionselect'
                             : 'border-transparent'
                         "
                       >
@@ -57,21 +59,32 @@
                           class="object-cover h-36 w-36"
                         />
                         <div
-                          class="text-center p-2 text-xs text-white bg-gray-500"
+                          class="text-center p-2 text-xs text-white"
+                          :class="
+                            selectedItemId == option.id
+                              ? 'optionselect'
+                              : 'optionnonselect'
+                          "
                         >
                           {{ option.name }}
                         </div>
-                        <div
+                        <!-- <div
                           class="text-center p-2 bg-red-500 text-xs text-white"
                         >
                           {{ option.price }} บาท
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="mt-3 flex">
+                <div v-if="selected > 0" class="mt-3 grid grid-cols-3">
+                  <div>
+                    <div class="font-bold text-lg mb-4">Price</div>
+                    <div style="color: #ffb730" class="text-xl font-semibold">
+                      {{ selected }}
+                    </div>
+                  </div>
                   <div>
                     <div class="font-bold text-lg mb-4">Quantity</div>
                     <div class="flex">
@@ -86,7 +99,11 @@
                         v-if="quantity > 1"
                         class="w-10 h-10 qbox1 flex cursor-pointer"
                         style="color: #404040"
-                        @click="(quantity -= 1) + (total = op * quantity)"
+                        @click="
+                          (quantity -= 1) +
+                            (total = op * quantity) +
+                            (selected -= selected /= quantity + 1)
+                        "
                       >
                         <div class="mx-auto my-auto">-</div>
                       </div>
@@ -99,51 +116,83 @@
                       <div
                         class="w-10 h-10 qbox3 flex cursor-pointer"
                         style="color: #404040"
-                        @click="(quantity += 1) + (total = op * quantity)"
+                        @click="
+                          (quantity += 1) +
+                            (total = op * quantity) +
+                            ((selected /= quantity - 1) +
+                              (selected *= quantity))
+                        "
                       >
                         <div class="mx-auto my-auto">+</div>
                       </div>
                     </div>
                   </div>
-
-                  <div
-                    class="w-full mt-auto rounded-lg font-bold text-white text-center cursor-pointer buybutton md:flex"
-                    @click.prevent="addToCart()"
-                  >
-                    <div class="w-full p-4">เพิ่มลงตะกร้าสินค้่า</div>
-                  </div>
                 </div>
               </div>
-
+              <div
+                v-if="selected > 0"
+                class="w-full mt-auto rounded-lg font-bold text-white text-center cursor-pointer buybutton md:flex"
+                @click.prevent="addToCart()"
+              >
+                <div class="w-full p-4">Add to cart</div>
+              </div>
               <!--cart -->
-              <div class="mx-6 mb-10">
-                <div class="font-bold">ตะกร้าสินค้า</div>
-                <h1 v-if="cartItem.length == 0" class="">ไม่มีสินค้า</h1>
-                <table class="table-auto">
-                  <tbody>
-                    <tr v-for="(cart, index) in cartItem" :key="cart.ref">
-                      <td>{{ cart.name }} X {{ cart.quantity }} ชิ้น</td>
-                      <td>ราคารวม {{ cart.price }} บาท</td>
-                      <td>
-                        <button
-                          class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                          @click="deleteCartItem(index)"
+
+              <div
+                v-if="selected > 0"
+                class="mt-10 rounded-lg p-5"
+                style="background-color: #f9f9f9"
+              >
+                <div class="font-bold text-lg mb-5">
+                  Cart
+                </div>
+                <h1
+                  v-if="cartItem.length == 0"
+                  class="w-full p-5 pb-10 text-center text-slate-400"
+                >
+                  No items have been added yet.
+                </h1>
+                <div>
+                  <div
+                    v-for="(cart, index) in cartItem"
+                    :key="cart.ref"
+                    class="mb-3 md:w-96 rounded pl-3 flex"
+                    style="background-color: #ffffff"
+                  >
+                    <div class="grid grid-cols-5 w-full">
+                      <div class="my-auto col-span-3">
+                        <span class="font-semibold"
+                          ><span style="color: #ffc24c">- </span>
+                          {{ cart.name }}</span
                         >
-                          ลบ
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                  <tfoot>
-                    <tr class="font-semibold text-black">
-                      <th scope="row" class="text-semi-bold space-x-2">
-                        ยอดรวมสินค้่า
-                      </th>
-                      <td class="px-3">{{ cartTotalAmount }} ชิ้น</td>
-                      <td class="px-3">ราคา {{ cartTotalPrice }} บาท</td>
-                    </tr>
-                  </tfoot>
-                </table>
+                        Qty. {{ cart.quantity }}
+                      </div>
+                      <div class="my-auto col-span-2" >{{ cart.price }} ฿</div>
+                    </div>
+
+                    <div class="">
+                      <button
+                        class="bg-red-500 hover:bg-red-700 text-white text-xs font-bold py-3 px-3 focus:outline-none focus:shadow-outline ml-auto"
+                        style="border-radius: 0 4px 4px 0"
+                        @click="deleteCartItem(index)"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="cartItem.length > 0" class="">
+                  <div class="font-semibold text-black text-lg">
+                    <div class="w-60 grid grid-cols-2">
+                      <div class="font-bold">Item amount:</div>
+                      <div style="color: #ffc24c">{{ cartTotalAmount }}</div>
+                    </div>
+                    <div class="w-60 grid grid-cols-2">
+                      <div class="font-bold">Total price:</div>
+                      <div style="color: #ffc24c">{{ cartTotalPrice }} ฿</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -153,6 +202,12 @@
             <!--input customer-->
             <div class="mb-10 mt-10 grid grid-cols-1 lg:grid-cols-2 gap-x-4">
               <div class="mx-4 lg:mx-0">
+                <div>
+                  <div class="text-xl font-extrabold">Customer Information</div>
+                  <div class="text-xs font-thin text-gray-400 mb-5">
+                    Please fill all field
+                  </div>
+                </div>
                 <ValidationProvider
                   v-slot="{ errors }"
                   name="ชื่อลูกค้า"
@@ -163,18 +218,19 @@
                       class="block text-gray-700 text-sm font-bold mb-2"
                       for="name"
                     >
-                      ชื่อลูกค้า
+                      customer name
+                      <span class="text-red-500 py-1 px-2">
+                        {{ errors[0] }}
+                      </span>
                     </label>
                     <input
                       id="name"
                       v-model="customerName"
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      class="bg-white rounded-md p-3 text-sm w-full md:w-10/12"
+                      style="border-width: 1.5px; border-color: #000000"
                       type="text"
-                      placeholder="ชื่อลูกค้า"
+                      placeholder="firstname lastname"
                     />
-                    <span class="text-red-500 py-1 px-2">
-                      {{ errors[0] }}
-                    </span>
                   </div>
                 </ValidationProvider>
 
@@ -188,18 +244,19 @@
                       class="block text-gray-700 text-sm font-bold mb-2"
                       for="name"
                     >
-                      เบอร์โทรศัพท์
+                      phone number<span class="text-red-500 py-1 px-2">
+                        {{ errors[0] }}
+                      </span>
                     </label>
+
                     <input
                       id="name"
                       v-model="customerPhoneNumber"
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      class="bg-white rounded-md p-3 text-sm w-full md:w-10/12"
+                      style="border-width: 1.5px; border-color: #000000"
                       type="text"
-                      placeholder="เบอร์โทรศัพท์"
+                      placeholder="06x-xxx-xxxx"
                     />
-                    <span class="text-red-500 py-1 px-2">
-                      {{ errors[0] }}
-                    </span>
                   </div>
                 </ValidationProvider>
 
@@ -209,22 +266,19 @@
                   rules="required"
                 >
                   <div class="mb-4">
-                    <label
-                      class="block text-gray-700 text-sm font-bold mb-2"
-                      for="name"
-                    >
-                      อีเมล
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                      e-mail
+                      <span class="text-red-500 py-1 px-2">
+                        {{ errors[0] }}
+                      </span>
                     </label>
                     <input
-                      id="name"
                       v-model="customerEmail"
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      class="bg-white rounded-md p-3 text-sm w-full md:w-10/12"
+                      style="border-width: 1.5px; border-color: #000000"
                       type="text"
-                      placeholder="อีเมล"
+                      placeholder="up4sale@mail.com"
                     />
-                    <span class="text-red-500 py-1 px-2">
-                      {{ errors[0] }}
-                    </span>
                   </div>
                 </ValidationProvider>
 
@@ -235,39 +289,135 @@
                 >
                   <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2">
-                      ที่อยู่ในการจัดส่งสินค้า
-                      <textarea
-                        v-model="customerAddress"
-                        class="shadow form-textarea mt-1 block w-full border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        rows="5"
-                        placeholder="Textarea"
-                      ></textarea>
+                      shipping address
+                      <span class="text-red-500 py-1 px-2">
+                        {{ errors[0] }}
+                      </span>
                     </label>
-                    <span class="text-red-500 py-1 px-2">
-                      {{ errors[0] }}
-                    </span>
+                    <textarea
+                      v-model="customerAddress"
+                      class="bg-white rounded-md p-3 text-sm w-full md:w-10/12"
+                      style="border-width: 1.5px; border-color: #000000"
+                      rows="5"
+                      placeholder="Text here"
+                    ></textarea>
                   </div>
                 </ValidationProvider>
                 <!--test-->
               </div>
 
               <div class="mx-4 lg:mx-0">
-                <div
-                  class="rounded-lg bg-gray-50 w-full py-4 px-4 flex flex-row gap-x-4 items-center"
-                >
-                  <div class="w-20 h-20 rounded-lg overflow-hidden">
-                    <img
-                      src="https://www.kasikornbank.com/SiteCollectionDocuments/about/img/logo/logo.png"
-                    />
-                  </div>
-                  <div class="flex flex-col justify-center">
-                    <div class="text-sm font-light">KASIKORN</div>
-                    <div class="text-lg">ชื่อ นามสกุล</div>
-                    <div class="text-lg">xxx-xxxx-xxx</div>
+                <div>
+                  <div class="text-xl font-extrabold">Payment</div>
+                  <div class="text-xs font-thin text-gray-400 mb-5">
+                    tranfer to this account
                   </div>
                 </div>
+                <div class="rounded-2xl">
+                  <div class="w-full flex">
+                    <div
+                      v-if="toggle"
+                      @click="toggle = false"
+                      style="
+                        background-color: #161c2d;
+                        color: #f1f1f1;
+                        border-radius: 12px 0 0 0;
+                      "
+                      class="w-full p-3 text-center text-sm font-extralight cursor-pointer"
+                    >
+                      Account number
+                    </div>
+                    <div
+                      v-if="toggle"
+                      @click="toggle = false"
+                      style="
+                        background-color: #f1f1f1;
+                        color: #161c2d;
+                        border-radius: 0 12px 0 0;
+                      "
+                      class="w-full p-3 text-center text-sm font-extralight cursor-pointer"
+                    >
+                      QR scan
+                    </div>
 
-                <div>
+                    <div
+                      v-if="toggle == false"
+                      @click="toggle = true"
+                      style="
+                        background-color: #f1f1f1;
+                        color: #161c2d;
+                        border-radius: 12px 0 0 0;
+                      "
+                      class="w-full p-3 text-center text-sm font-extralight cursor-pointer"
+                    >
+                      Account number
+                    </div>
+                    <div
+                      v-if="toggle == false"
+                      @click="toggle = true"
+                      style="
+                        background-color: #161c2d;
+                        color: #f1f1f1;
+                        border-radius: 0 12px 0 0;
+                      "
+                      class="w-full p-3 text-center text-sm font-extralight cursor-pointer"
+                    >
+                      QR scan
+                    </div>
+                  </div>
+                  <div
+                    class="w-full py-4 px-8 flex flex-row gap-x-4"
+                    style="
+                      border-radius: 0 0 12px 12px;
+                      background-color: #f9f9f9;
+                    "
+                    v-if="toggle"
+                  >
+                    <div class="">
+                      <img
+                        class="w-16 h-16 rounded-lg object-cover mb-auto"
+                        src="https://www.kasikornbank.com/SiteCollectionDocuments/about/img/logo/logo.png"
+                      />
+                    </div>
+                    <div class="flex flex-col justify-center">
+                      <div class="text-xs font-bold mb-2">KASIKORN</div>
+                      <div class="text-lg">ชื่อ นามสกุล</div>
+                      <div class="text-lg">xxx-xxxx-xxx</div>
+                    </div>
+                  </div>
+                  <div
+                    v-if="toggle == false"
+                    class="w-full py-4 px-8 flex flex-row gap-x-4"
+                    style="
+                      border-radius: 0 0 12px 12px;
+                      background-color: #f9f9f9;
+                    "
+                  >
+                    <!-- qr scan -->
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <!-- slip preview -->
+                <img
+                  :src="customerPaymentSlipPreview"
+                  class="rounded-xl my-5"
+                />
+                <label
+                  v-if="customerPaymentSlip != null"
+                  for="dropzone-file"
+                  class="text-sm px-5 p-2 rounded-md cursor-pointer"
+                  style="border-width: 1.5px; border-color: #000000"
+                  >re-upload tranfer reciept
+                  <input
+                    id="dropzone-file"
+                    type="file"
+                    class="hidden"
+                    @change="onFileChange($event)"
+                /></label>
+                <div v-if="customerPaymentSlip == null">
                   <div class="flex justify-center items-center w-full mt-4">
                     <label
                       for="dropzone-file"
@@ -298,6 +448,7 @@
                           SVG, PNG, JPG or GIF (MAX. 800x400px)
                         </p>
                       </div>
+
                       <input
                         id="dropzone-file"
                         type="file"
@@ -311,12 +462,12 @@
             </div>
           </div>
 
-          <div>
+          <div class="mt-20 mx-5 md:mx-0">
             <button
               class="w-full p-4 rounded-xl text-lg font-bold text-white text-center cursor-pointer buybutton"
               @click.prevent="showFormOrder ? confirmOrder() : confirmCart()"
             >
-              {{ showFormOrder == true ? 'ยืนยันการสั่งซื้อ' : 'สั่งซื้อ' }}
+              {{ showFormOrder == true ? 'Confirm order' : 'Order' }}
             </button>
           </div>
 
@@ -443,6 +594,7 @@ export default class salepage extends Vue {
 
   cartTotalAmount: number = 0;
   cartTotalPrice: number = 0;
+  totalPrice: number = 0;
 
   deleteCartItem(index: number) {
     this.cartItem.splice(index, 1);
@@ -484,6 +636,15 @@ export default class salepage extends Vue {
       if (cart >= 0) {
         this.cartItem[cart].price += this.selectedItem.price * this.quantity;
         this.cartItem[cart].quantity += this.quantity;
+        this.cartTotalAmount += this.quantity;
+        this.cartTotalPrice = 0;
+        for (let i = 0; i < this.cartItem.length; i++) {
+          this.cartTotalPrice += this.cartItem[i].price;
+        }
+        // this.cartTotalPrice += this.cartItem[cart].price;
+        // for (let i = 0; i < this.cartItem.length; i++) {
+        //   this.totalPrice += this.cartItem[i].price;
+        // }
       } else {
         this.cartItem.push({
           ref: new Date().getTime(),
@@ -515,40 +676,40 @@ export default class salepage extends Vue {
     if (this.showFormOrder && this.cartItem.length > 0) {
       if (this.customerName === '') {
         this.$swal.fire({
-          title: 'ข้อมูลไม่ครบ',
-          text: 'โปรดกรอกชื่อผู้ซื้อ',
+          title: 'Please fill all field',
+          text: 'customer name required',
           icon: 'warning',
           toast: true,
           position: 'top-right',
         });
       } else if (this.customerPhoneNumber === '') {
         this.$swal.fire({
-          title: 'ข้อมูลไม่ครบ',
-          text: 'โปรดกรอกเบอร์โทรศัพท์ผู้ซื้อ',
+          title: 'Please fill all field',
+          text: 'phone number required',
           icon: 'warning',
           toast: true,
           position: 'top-right',
         });
       } else if (this.customerEmail === '') {
         this.$swal.fire({
-          title: 'ข้อมูลไม่ครบ',
-          text: 'โปรดกรอกอีเมลผู้ซื้อ',
+          title: 'Please fill all field',
+          text: 'e-mail required',
           icon: 'warning',
           toast: true,
           position: 'top-right',
         });
       } else if (this.customerAddress === '') {
         this.$swal.fire({
-          title: 'ข้อมูลไม่ครบ',
-          text: 'โปรดกรอกที่อยู่',
+          title: 'Please fill all field',
+          text: 'shipping address required',
           icon: 'warning',
           toast: true,
           position: 'top-right',
         });
       } else if (this.customerPaymentSlip === null) {
         this.$swal.fire({
-          title: 'ข้อมูลไม่ครบ',
-          text: 'โปรดแนบสลิปการโอนเงิน',
+          title: 'Please fill all field',
+          text: 'attach your tranfer reciept',
           icon: 'warning',
           toast: true,
           position: 'top-right',
@@ -603,7 +764,7 @@ export default class salepage extends Vue {
 
     console.log('windowLocation', windowLocation);
 
-    const response = await this.$api.site.getSiteByDomain(windowLocation);
+    const response = await this.$api.site.getSiteByDomain('xver');
     console.log('response', response);
 
     if (response.success && response.data) {
@@ -632,6 +793,12 @@ export default class salepage extends Vue {
     return 'data:image/png;base64,' + params;
   }
 
+  // for (let i = 0; i < this.site.Product.ProductOption.length; i++) {
+  //   const element = this.site.Product.ProductOption[i];
+
+  // }
+
+  testtest = this.site.Product.ProductOption;
   minprice = Math.min(
     ...this.site.Product.ProductOption.map((item) => item.price)
   );
@@ -644,9 +811,10 @@ export default class salepage extends Vue {
 
   quantity = 1;
   select = '';
+  selected = 0;
   op = 0;
   total = 0;
-  display = this.total + ' ฿';
+  toggle = true;
 }
 </script>
 <style scoped>
@@ -737,11 +905,20 @@ export default class salepage extends Vue {
 }
 
 .buybutton {
-  background-color: #195c9b;
+  background-color: #336ce9;
   transition-duration: 0.25s;
 }
 
 .buybutton:hover {
-  background-color: #0c4e8c;
+  background-color: #154fcb;
+}
+
+.optionselect {
+  border-color: #ffc24c;
+  background-color: #ffc24c;
+}
+.optionnonselect {
+  border-color: #3c3f42;
+  background-color: #3c3f42;
 }
 </style>
