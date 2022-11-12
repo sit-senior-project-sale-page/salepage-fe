@@ -13,7 +13,7 @@
           <div class="md:flex">
             <!--product image-->
             <div>
-              <img :src="productImage" />
+              <img :src="productImage" class="rounded-lg" />
             </div>
 
             <div class="w-auto">
@@ -22,12 +22,7 @@
                 <div class="font-bold text-xl md:text-3xl">
                   {{ site.Product.name }}
                 </div>
-              </div>
-
-              <!--product detail-->
-              <div class="mx-6 mb-10">
-                <div class="font-bold text-lg">Product details</div>
-                <div class="mt-4">{{ site.Product.detail }}</div>
+                {{price}}
               </div>
 
               <!--product option-->
@@ -48,7 +43,7 @@
                         class="rounded-lg overflow-hidden border-2"
                         :class="
                           selectedItemId == option.id
-                            ? 'border-black'
+                            ? 'optionactive'
                             : 'border-transparent'
                         "
                       >
@@ -61,11 +56,11 @@
                         >
                           {{ option.name }}
                         </div>
-                        <div
+                        <!-- <div
                           class="text-center p-2 bg-red-500 text-xs text-white"
                         >
                           {{ option.price }} บาท
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>
@@ -315,6 +310,8 @@
         </div>
       </div>
     </div>
+    <!-- {{site.Product.ProductOption}} -->
+    <!-- {{options}} -->
   </div>
 </template>
 
@@ -518,7 +515,7 @@ export default class salepage extends Vue {
 
     console.log('windowLocation', windowLocation);
 
-    const response = await this.$api.site.getSiteByDomain('test-pk01');
+    const response = await this.$api.site.getSiteByDomain('xver');
     console.log('response', response);
 
     if (response.success && response.data) {
@@ -545,6 +542,8 @@ export default class salepage extends Vue {
   maxprice = Math.max(
     ...this.site.Product.ProductOption.map((item) => item.price)
   );
+  
+
 
   price = this.minprice + ' - ' + this.maxprice + ' ฿';
 
@@ -553,6 +552,7 @@ export default class salepage extends Vue {
   op = 0;
   total = 0;
   display = this.total + ' ฿';
+  
 }
 </script>
 <style scoped>
@@ -607,9 +607,9 @@ export default class salepage extends Vue {
   outline: 2px;
   outline-color: black;
 }
-.option:active {
-  outline: 2px;
-  outline-color: black;
+.optionactive {
+  /* outline: 2px; */
+  border-color: #FFC24C;
 }
 .qbox1 {
   border-radius: 10px 0 0 10px;
@@ -633,4 +633,5 @@ export default class salepage extends Vue {
 .buybutton:hover {
   background-color: #0c4e8c;
 }
+
 </style>
