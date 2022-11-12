@@ -132,11 +132,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-<<<<<<< HEAD
-    baseURL: 'http://api.up4sale.shop',
-=======
     baseURL: 'https://api.up4sale.shop',
->>>>>>> 1100de4a4f86a89fa3f11b10f6577bcc11e5ec00
     // credentials: true,
     // proxy: true,
   },

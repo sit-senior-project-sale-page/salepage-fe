@@ -102,16 +102,18 @@
                 class="h-16 w-16 object-cover rounded-lg text-xs text-white flex cursor-pointer"
                 style="background-color: #142e46"
               >
-                <div class="mx-auto my-auto text-center text-gray-400">attach photo</div>
+                <div class="mx-auto my-auto text-center text-gray-400">
+                  attach photo
+                </div>
               </div>
-              <div class="my-auto col-span-2 pr-3 ">
+              <div class="my-auto col-span-2 pr-3">
                 <input
                   type="text"
                   class="rounded-md p-2 px-3 text-sm focus:outline-none focus:ring-1 focus:ring-blue-300 ring-offset-2"
                   placeholder="option name"
                 />
               </div>
-              <div class="my-auto pr-3 ">
+              <div class="my-auto pr-3">
                 <input
                   type="number"
                   class="rounded-md p-2 px-3 text-sm w-20 focus:outline-none focus:ring-1 focus:ring-blue-300 ring-offset-2"
@@ -136,10 +138,10 @@ import NavBar from '~/components/NavBar.vue';
 import OptionCreateCard from '~/components/OptionCreateCard.vue';
 export default {
   components: { NavBar, OptionCreateCard },
-  data(){
-    return{
-        image: null,
-    }
+  data() {
+    return {
+      image: null,
+    };
   },
   methods: {
     selectImage() {
@@ -154,12 +156,11 @@ export default {
           this.artistImage = e.target.result;
         };
         reader.readAsDataURL(file[0]);
-        this.$emit("input", file[0]);
+        this.$emit('input', file[0]);
       }
       this.selectedImage = event.target.files[0];
     },
-  }
+  },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>
