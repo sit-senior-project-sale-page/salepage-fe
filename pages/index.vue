@@ -13,7 +13,7 @@
           <div class="md:flex">
             <!--product image-->
             <div>
-              <img :src="previewImage(site.Product.ProductImage[0].data)" />
+              <img :src="site.Product.ProductImage[0].data" />
             </div>
 
             <div class="w-auto px-5">
@@ -27,12 +27,13 @@
               <!--product detail-->
               <div class="mb-10">
                 <div class="font-bold">Product details</div>
-                <div class="mt-2" style="color: #555555;">{{ site.Product.detail }}</div>
+                <div class="mt-2" style="color: #555555">
+                  {{ site.Product.detail }}
+                </div>
               </div>
 
               <!--product option-->
               <div class="mb-10">
-                
                 <div class="font-bold mb-2">Product options</div>
                 <div
                   class="grid grid-cols-2 gap-2 lg:grid-cols-3 col-span-5 justify-items-center productoptions"
@@ -55,7 +56,7 @@
                         "
                       >
                         <img
-                          :src="previewImage(option.dataImage)"
+                          :src="option.dataImage"
                           class="object-cover h-36 w-36"
                         />
                         <div
@@ -143,9 +144,7 @@
                 class="mt-10 rounded-lg p-5"
                 style="background-color: #f9f9f9"
               >
-                <div class="font-bold text-lg mb-5">
-                  Cart
-                </div>
+                <div class="font-bold text-lg mb-5">Cart</div>
                 <h1
                   v-if="cartItem.length == 0"
                   class="w-full p-5 pb-10 text-center text-slate-400"
@@ -167,7 +166,7 @@
                         >
                         Qty. {{ cart.quantity }}
                       </div>
-                      <div class="my-auto col-span-2" >{{ cart.price }} ฿</div>
+                      <div class="my-auto col-span-2">{{ cart.price }} ฿</div>
                     </div>
 
                     <div class="">
@@ -317,61 +316,61 @@
                   <div class="w-full flex">
                     <div
                       v-if="toggle"
-                      @click="toggle = false"
                       style="
                         background-color: #161c2d;
                         color: #f1f1f1;
                         border-radius: 12px 0 0 0;
                       "
                       class="w-full p-3 text-center text-sm font-extralight cursor-pointer"
+                      @click="toggle = false"
                     >
                       Account number
                     </div>
                     <div
                       v-if="toggle"
-                      @click="toggle = false"
                       style="
                         background-color: #f1f1f1;
                         color: #161c2d;
                         border-radius: 0 12px 0 0;
                       "
                       class="w-full p-3 text-center text-sm font-extralight cursor-pointer"
+                      @click="toggle = false"
                     >
                       QR scan
                     </div>
 
                     <div
                       v-if="toggle == false"
-                      @click="toggle = true"
                       style="
                         background-color: #f1f1f1;
                         color: #161c2d;
                         border-radius: 12px 0 0 0;
                       "
                       class="w-full p-3 text-center text-sm font-extralight cursor-pointer"
+                      @click="toggle = true"
                     >
                       Account number
                     </div>
                     <div
                       v-if="toggle == false"
-                      @click="toggle = true"
                       style="
                         background-color: #161c2d;
                         color: #f1f1f1;
                         border-radius: 0 12px 0 0;
                       "
                       class="w-full p-3 text-center text-sm font-extralight cursor-pointer"
+                      @click="toggle = true"
                     >
                       QR scan
                     </div>
                   </div>
                   <div
+                    v-if="toggle"
                     class="w-full py-4 px-8 flex flex-row gap-x-4"
                     style="
                       border-radius: 0 0 12px 12px;
                       background-color: #f9f9f9;
                     "
-                    v-if="toggle"
                   >
                     <div class="">
                       <img
@@ -764,7 +763,7 @@ export default class salepage extends Vue {
 
     console.log('windowLocation', windowLocation);
 
-    const response = await this.$api.site.getSiteByDomain('xver');
+    const response = await this.$api.site.getSiteByDomain('test');
     console.log('response', response);
 
     if (response.success && response.data) {
@@ -787,10 +786,6 @@ export default class salepage extends Vue {
       0
     );
     this.cartTotalPrice = currentvalue.reduce((pv, crv) => pv + crv.price, 0);
-  }
-
-  previewImage(params: any) {
-    return 'data:image/png;base64,' + params;
   }
 
   // for (let i = 0; i < this.site.Product.ProductOption.length; i++) {
