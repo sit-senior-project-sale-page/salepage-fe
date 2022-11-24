@@ -735,19 +735,33 @@ export default class salepage extends Vue {
         formData.append('customerPaymentSlip', this.customerPaymentSlip);
         formData.append('order', JSON.stringify({ ...data }));
 
-        const response = await this.$api.order.createOrder(formData);
-        console.log(response);
+        try {
+          const response = await this.$api.order.createOrder(formData);
+          console.log(response);
 
-        if (response.success && response.data) {
-          this.$swal
-            .fire({
-              title: 'ซื้อสินค้าสำเร็จ',
-              text: 'ระบบจะทำการส่งรายการสินค้าให้กับอีเมลของท่าน',
-              icon: 'success',
-            })
-            .then(() => {
-              window.location.reload();
-            });
+          if (response.success && response.data) {
+            this.$swal
+              .fire({
+                title: 'ซื้อสินค้าสำเร็จ',
+                text: 'ระบบจะทำการส่งรายการสินค้าให้กับอีเมลของท่าน',
+                icon: 'success',
+              })
+              .then(() => {
+                window.location.reload();
+              });
+          } else {
+            this.$swal
+              .fire({
+                title: 'ซื้อสินค้าไม่สำเร็จ',
+                text: response.message,
+                icon: 'warning',
+              })
+              .then(() => {
+                window.location.reload();
+              });
+          }
+        } catch (error) {
+          console.log('error', error);
         }
       }
     }
