@@ -764,7 +764,7 @@ export default class salepage extends Vue {
 
     console.log('windowLocation', windowLocation);
 
-    const response = await this.$api.site.getSiteByDomain('xver');
+    const response = await this.$api.site.getSiteByDomain('test');
     console.log('response', response);
 
     if (response.success && response.data) {
