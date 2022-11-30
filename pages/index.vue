@@ -3,6 +3,7 @@
     <Loading v-if="$fetchState.pending" />
     <div v-else>
       <div class="flex">
+        
         <!-- <div
           class="fixed w-screen h-screen top-0"
           style="background-color: #161C2D; z-index: -10"
@@ -11,9 +12,13 @@
           class="md:m-10 md:rounded-3xl md:p-10 bg-white lg:my-24 w-full box"
         >
           <div class="md:flex">
-            <!--product image-->
-            <div>
+            <!-- product image -->
+            <!-- <div>
               <img :src="site.Product.ProductImage[0].data" />
+            </div> -->
+
+            <div v-for="img in site.Product.ProductImage" :key="img.id">
+              <img :src="img.data" />
             </div>
 
             <div class="w-auto px-5">
