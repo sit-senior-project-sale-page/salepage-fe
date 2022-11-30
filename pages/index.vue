@@ -3,7 +3,6 @@
     <Loading v-if="$fetchState.pending" />
     <div v-else>
       <div class="flex">
-        
         <!-- <div
           class="fixed w-screen h-screen top-0"
           style="background-color: #161C2D; z-index: -10"
@@ -377,16 +376,16 @@
                       background-color: #f9f9f9;
                     "
                   >
-                    <div class="">
-                      <img
-                        class="w-16 h-16 rounded-lg object-cover mb-auto"
-                        src="https://www.kasikornbank.com/SiteCollectionDocuments/about/img/logo/logo.png"
-                      />
-                    </div>
                     <div class="flex flex-col justify-center">
-                      <div class="text-xs font-bold mb-2">KASIKORN</div>
-                      <div class="text-lg">ชื่อ นามสกุล</div>
-                      <div class="text-lg">xxx-xxxx-xxx</div>
+                      <div class="text-xs font-bold mb-2">
+                        {{ site.member.paymentBankName.toUpperCase() }}
+                      </div>
+                      <div class="text-lg">
+                        {{ site.member.paymentBankAccountName }}
+                      </div>
+                      <div class="text-lg">
+                        {{ site.member.paymentBankAccountNumber }}
+                      </div>
                     </div>
                   </div>
                   <div
@@ -518,6 +517,12 @@ interface Product {
   ProductOption: ProductOption[];
 }
 
+interface MemberPaymentDetail {
+  paymentBankAccountNumber: string;
+  paymentBankAccountName: string;
+  paymentBankName: string;
+}
+
 interface Site {
   domain: string;
   shortLink?: any;
@@ -526,6 +531,7 @@ interface Site {
   lineAccountId: string;
   messengerAccountId: string;
   Product: Product;
+  member: MemberPaymentDetail;
 }
 
 interface ProductCart {
@@ -563,6 +569,11 @@ export default class salepage extends Vue {
     isSubDomain: true,
     lineAccountId: '',
     messengerAccountId: '',
+    member: {
+      paymentBankAccountName: '',
+      paymentBankAccountNumber: '',
+      paymentBankName: '',
+    },
     Product: {
       id: 1,
       name: '',
@@ -782,7 +793,7 @@ export default class salepage extends Vue {
 
     console.log('windowLocation', windowLocation);
 
-    const response = await this.$api.site.getSiteByDomain('test');
+    const response = await this.$api.site.getSiteByDomain('xver');
     console.log('response', response);
 
     if (response.success && response.data) {
