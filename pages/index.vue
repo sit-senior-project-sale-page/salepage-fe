@@ -398,8 +398,10 @@
                   >
                     <!-- qr scan -->
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png"
-                      alt=""
+                      :src="
+                        showQrCode(site.member.mobileNumber, cartTotalPrice)
+                      "
+                      alt="QRCODE"
                     />
                   </div>
                 </div>
@@ -493,6 +495,8 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'nuxt-property-decorator';
 
+import generatePayload from 'promptpay-qr';
+
 interface ProductOption {
   id: number;
   name: string;
@@ -521,6 +525,7 @@ interface MemberPaymentDetail {
   paymentBankAccountNumber: string;
   paymentBankAccountName: string;
   paymentBankName: string;
+  mobileNumber: string;
 }
 
 interface Site {
@@ -573,6 +578,7 @@ export default class salepage extends Vue {
       paymentBankAccountName: '',
       paymentBankAccountNumber: '',
       paymentBankName: '',
+      mobileNumber: '',
     },
     Product: {
       id: 1,
@@ -620,6 +626,19 @@ export default class salepage extends Vue {
     if (this.$fetchState.error) {
       console.log('error page');
     }
+  }
+
+  showQrCode(mobilenumber: any, price: any) {
+    console.log(
+      '🚀 ~ file: index.vue:630 ~ salepage ~ showQrCode ~ price',
+      price
+    );
+    console.log(
+      '🚀 ~ file: index.vue:630 ~ salepage ~ showQrCode ~ mobilenumber',
+      mobilenumber
+    );
+    const payload = generatePayload(mobilenumber, price);
+    return `https://api.qrserver.com/v1/create-qr-code/?data=${payload}`;
   }
 
   onFileChange(e: any) {
