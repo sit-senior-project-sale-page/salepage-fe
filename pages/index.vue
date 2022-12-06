@@ -331,27 +331,27 @@
                       Account number
                     </div>
                     <div
-                      v-if="toggle"
+                      v-if="toggle == false"
                       style="
                         background-color: #f1f1f1;
                         color: #161c2d;
                         border-radius: 0 12px 0 0;
                       "
                       class="w-full p-3 text-center text-sm font-extralight cursor-pointer"
-                      @click="toggle = false"
+                      @click="toggle = true"
                     >
                       QR scan
                     </div>
 
                     <div
-                      v-if="toggle == false"
+                      v-if="toggle"
                       style="
                         background-color: #f1f1f1;
                         color: #161c2d;
                         border-radius: 12px 0 0 0;
                       "
                       class="w-full p-3 text-center text-sm font-extralight cursor-pointer"
-                      @click="toggle = true"
+                      @click="toggle = false"
                     >
                       Account number
                     </div>
