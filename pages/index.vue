@@ -10,7 +10,6 @@
         <div
           class="md:m-10 md:rounded-3xl md:p-10 bg-white lg:my-24 w-full box"
         >
-          {{ selectedItem }}
           <div class="md:flex">
             <!-- product image -->
             <!-- <div>
