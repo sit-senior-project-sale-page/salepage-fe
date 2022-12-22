@@ -10,6 +10,7 @@
         <div
           class="md:m-10 md:rounded-3xl md:p-10 bg-white lg:my-24 w-full box"
         >
+          {{ selectedItem }}
           <div class="md:flex">
             <!-- product image -->
             <!-- <div>
@@ -45,7 +46,15 @@
                   <div
                     v-for="option in site.Product.ProductOption"
                     :key="option.id"
-                    @click="(selected = option.price) + (quantity = 1)"
+                    @click="
+                      if (option.discountPrice > 0) {
+                        selected = option.discountPrice;
+                        was = option.price
+                      } else {
+                        selected = option.price;
+                      }
+                      +(quantity = 1);
+                    "
                   >
                     <div
                       class="mb-3 option cursor-pointer"
@@ -87,6 +96,11 @@
                   <div>
                     <div class="font-bold text-lg mb-4">Price</div>
                     <div style="color: #ffb730" class="text-xl font-semibold">
+                      <span
+                        v-if="selectedItem.discountPrice > 0"
+                        class="text-gray-300 line-through"
+                        >{{ was }}</span
+                      >
                       {{ selected }}
                     </div>
                   </div>
@@ -107,7 +121,8 @@
                         @click="
                           (quantity -= 1) +
                             (total = op * quantity) +
-                            (selected -= selected /= quantity + 1)
+                            (selected -= selected /= quantity + 1) +
+                            (was -= was /= quantity + 1)
                         "
                       >
                         <div class="mx-auto my-auto">-</div>
@@ -126,6 +141,9 @@
                             (total = op * quantity) +
                             ((selected /= quantity - 1) +
                               (selected *= quantity))
+                              +
+                            ((was /= quantity - 1) +
+                              (was *= quantity))
                         "
                       >
                         <div class="mx-auto my-auto">+</div>
@@ -641,6 +659,14 @@ export default class salepage extends Vue {
     return `https://api.qrserver.com/v1/create-qr-code/?data=${payload}`;
   }
 
+  switch() {
+    if (this.toggle == true) {
+      this.toggle = false;
+    } else {
+      this.toggle = true;
+    }
+  }
+
   onFileChange(e: any) {
     e.preventDefault();
     const files = e.target.files || e.dataTransfer.files;
@@ -657,7 +683,7 @@ export default class salepage extends Vue {
   addToCart() {
     if (!this.selectedItem) {
       this.$swal.fire({
-        text: 'โปรดเลือกสินค้าก่อนใส่ตะกร้า',
+        text: 'Please add item into cart',
         icon: 'info',
         toast: true,
         position: 'top-right',
@@ -668,7 +694,12 @@ export default class salepage extends Vue {
       );
 
       if (cart >= 0) {
-        this.cartItem[cart].price += this.selectedItem.price * this.quantity;
+        if (this.selectedItem.discountPrice > 0) {
+          this.cartItem[cart].price +=
+            this.selectedItem.discountPrice * this.quantity;
+        } else {
+          this.cartItem[cart].price += this.selectedItem.price * this.quantity;
+        }
         this.cartItem[cart].quantity += this.quantity;
         this.cartTotalAmount += this.quantity;
         this.cartTotalPrice = 0;
@@ -680,14 +711,25 @@ export default class salepage extends Vue {
         //   this.totalPrice += this.cartItem[i].price;
         // }
       } else {
-        this.cartItem.push({
-          ref: new Date().getTime(),
-          productId: this.site?.Product.id,
-          productOptionId: this.selectedItem.id,
-          name: this.selectedItem.name,
-          quantity: this.quantity,
-          price: this.selectedItem.price * this.quantity,
-        });
+        if (this.selectedItem.discountPrice > 0) {
+          this.cartItem.push({
+            ref: new Date().getTime(),
+            productId: this.site?.Product.id,
+            productOptionId: this.selectedItem.id,
+            name: this.selectedItem.name,
+            quantity: this.quantity,
+            price: this.selectedItem.discountPrice * this.quantity,
+          });
+        } else {
+          this.cartItem.push({
+            ref: new Date().getTime(),
+            productId: this.site?.Product.id,
+            productOptionId: this.selectedItem.id,
+            name: this.selectedItem.name,
+            quantity: this.quantity,
+            price: this.selectedItem.price * this.quantity,
+          });
+        }
       }
     }
   }
@@ -856,6 +898,7 @@ export default class salepage extends Vue {
   quantity = 1;
   select = '';
   selected = 0;
+  was = 0;
   op = 0;
   total = 0;
   toggle = true;
