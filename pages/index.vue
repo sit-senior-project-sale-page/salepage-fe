@@ -668,7 +668,10 @@ export default class salepage extends Vue {
       );
 
       if (cart >= 0) {
-        this.cartItem[cart].price += this.selectedItem.price * this.quantity;
+        this.cartItem[cart].price +=
+          (this.selectedItem.discountPrice
+            ? this.selectedItem.discountPrice
+            : this.selectedItem.price) * this.quantity;
         this.cartItem[cart].quantity += this.quantity;
         this.cartTotalAmount += this.quantity;
         this.cartTotalPrice = 0;
